@@ -25,7 +25,7 @@ public class Health : MonoBehaviour {
   // reduce the health if >0 and return it
   public int ReduceHealth() {
     if (currHealth > 0) {
-      Debug.Log("healthLost");
+      //Debug.Log("healthLost");
       currHealth--;
       hearts[currHealth].SetActive(false);
 

@@ -26,8 +26,8 @@ public class BlowControl : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    Debug.Log("our max pressure:" + StartCalibrate.maxPressureReading);
-      Debug.Log("(BW)Fizz pressure = " + FizzyoDevice.Instance().Pressure());
+    //Debug.Log("our max pressure:" + StartCalibrate.maxPressureReading);
+      //Debug.Log("(BW)Fizz pressure = " + FizzyoDevice.Instance().Pressure());
     //if(StartCalibrate.maxPressureReading < FizzyoDevice.Instance().Pressure()) {
     //  Debug.Log("Breathed well");
       if (Input.GetKey(KeyCode.B)) {
