@@ -35,16 +35,34 @@ namespace Assets.Scripts {
             if (dist < distanceBetweenBlocks + 0.1f && dist > 0)
             {
                 float horizontalDist = Mathf.Abs(newBlock.transform.position.x - TopBlock.transform.position.x);
-                if (horizontalDist < blockWidth)
+
+                // if it is not well centered allow it to have rigid body to fall
+                if(horizontalDist>1.5f)
+                {
+                    newBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+
+                }
+                else // it is positioned so it doesnt fall
                 {
                     AddBlock(newBlock);
+                    Debug.Log("horizontalDist:" + horizontalDist);
                     landingHandler(newBlock);
+                    // if it is close enough make it golden and and group blocks
+                    if(horizontalDist<0.4f)
+                    {
+                        GameObject.Destroy(newBlock.GetComponent<Rigidbody>());
+                        newBlock.transform.SetParent(TopBlock.transform);
+                        //make it golden
+                        newBlock.GetComponent<Renderer>().material = GameManager.goldenBoxMaterial;
+                         
+                    }
                     return;
                 }
             }
-            // if it is plotted properly it should not reach this code
-            // so we delete the object
-            GameObject.Destroy(newBlock);
+
+            //edge case when it drops let it fall on its own too
+            newBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+
         }
 
         private void AddBlock(GameObject newBlock) {
