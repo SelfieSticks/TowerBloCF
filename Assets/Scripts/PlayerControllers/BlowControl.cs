@@ -31,7 +31,7 @@ public class BlowControl : MonoBehaviour {
     //if(StartCalibrate.maxPressureReading < FizzyoDevice.Instance().Pressure()) {
     //  Debug.Log("Breathed well");
       if (Input.GetKey(KeyCode.B)) {
-        this.GetComponent<FadindController>().ResetToTransparent();
+        //this.GetComponent<FadingController>().ResetToTransparent();
       }
 
     //}
