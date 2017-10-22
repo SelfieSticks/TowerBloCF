@@ -10,6 +10,9 @@ public class FizzyoDevice : MonoBehaviour
     public bool loop = true;
     public string recordedDataPath = "Data/FizzyoData_3min.fiz";
 
+    public static readonly float MinMeasurablePressure = 0;
+    public static readonly float MaxMeasurablePressure = 1;
+
     //Singleton
     private static FizzyoDevice instance;
     private static object threadLock = new System.Object();
