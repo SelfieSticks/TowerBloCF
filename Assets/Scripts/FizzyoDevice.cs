@@ -1,129 +1,144 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Timers;
 using UnityEngine;
 
-public class FizzyoDevice : MonoBehaviour
+namespace Fizzyo
 {
-    //public 
-    public bool useRecordedData = true;
-    public bool loop = true;
-    public string recordedDataPath = "Data/FizzyoData_3min.fiz";
-
-    public static readonly float MinMeasurablePressure = 0;
-    public static readonly float MaxMeasurablePressure = 1;
-
-    //Singleton
-    private static FizzyoDevice instance;
-    private static object threadLock = new System.Object();
-
-    //protected
-    protected StreamReader fileReader = null;
-    protected string text = " "; // assigned to allow first line to be read below
-    System.Timers.Timer pollTimer = new System.Timers.Timer();
-    float pressure = 0;
-
-
-    public static FizzyoDevice Instance()
+    public class FizzyoDevice : MonoBehaviour
     {
-        if (instance == null)
+        //public 
+        public bool useRecordedData = true;
+        public bool loop = true;
+        public string recordedDataPath = "Data/FizzyoData_3min.fiz";
+
+        public static readonly float MinMeasurablePressure = 0;
+        public static readonly float MaxMeasurablePressure = 1;
+
+        private string[] recordedData;
+        private int recordedIndex = 0;
+
+        //Singleton
+        private static FizzyoDevice instance;
+        private static object threadLock = new System.Object();
+
+        //protected
+        protected string text = " "; // assigned to allow first line to be read below
+        float pollTimer = 0;
+        float pollTimerInterval = 0.3f;
+        float pressure = 0;
+
+        //Singleton instance of the device - There can be only one!
+        public static FizzyoDevice Instance()
         {
-            lock (threadLock)
+            if (instance == null)
             {
-                if (instance == null)
+                lock (threadLock)
                 {
-                    instance = GameObject.FindObjectOfType<FizzyoDevice>();
-                }
+                    if (instance == null)
+                    {
+                        instance = GameObject.FindObjectOfType<FizzyoDevice>();
+                    }
 
-                if (instance == null)
+                    if (instance == null)
+                    {
+                        instance = (new GameObject("FizzyoDevice")).AddComponent<FizzyoDevice>();
+                    }
+
+                }
+            }
+            return instance;
+        }
+
+
+        // Load the recorded data on start if used
+        void Start()
+        {
+            if (useRecordedData)
+            {
+                //Read the recorded data, if available
+                try
                 {
-                    instance = (new GameObject("EasySingleton")).AddComponent<FizzyoDevice>();
+                    using (StreamReader fileReader = new StreamReader(Application.dataPath + "/" + recordedDataPath))
+                    {
+                        List<String> inputArray = new List<string>();
+                        while (fileReader.Peek() >= 0)
+                        {
+                            inputArray.Add(fileReader.ReadLine());
+                        }
+                        recordedData = inputArray.ToArray();
+                    }
                 }
-
+                catch (Exception ex)
+                {
+                    Debug.Log("could not load file " + recordedDataPath + " " + ex.ToString());
+                }
+                finally
+                {
+                    Debug.Log("file loaded " + recordedDataPath);
+                }
             }
         }
-        return instance;
-    }
 
-
-    // Use this for initialization
-    void Start()
-    {
-        //Open a StreamReader to our recorded data
-        try
+        //Update the recorded poll interval if using recorded data
+        void Update()
         {
-            fileReader = new StreamReader(Application.dataPath + "/" + recordedDataPath);
-        }
-        catch
-        {
-            Debug.Log("could not load file " + recordedDataPath);
-        }
-        finally
-        {
-            Debug.Log("file loaded " + recordedDataPath);
-            pollTimer = new Timer();
-            pollTimer.Interval = 300; //load new pressure val every 30ms 
-            pollTimer.Elapsed += PollLoggedData;
-            pollTimer.Start();
-        }
-    }
-
-    //Cleanup  
-    void OnApplicationQuit()
-    {
-        //Close file pointer 
-        fileReader.Close();
-
-        //Stop Timer 
-        pollTimer.Stop();
-
-        Debug.Log("OnApplicationQuit");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    /// <summary>
-    /// If useRecordedData is set to false pressure data is streamed from the device or streamed from a log file if set to true.
-    /// </summary>
-    /// <returns>pressure data reported from device or log file with a range of -1 - 1.</returns>
-    public float Pressure()
-    {
-        if (useRecordedData)
-        {
-            return pressure;
-        }
-        else
-        {
-            return Input.GetAxisRaw("Horizontal");
-        }
-    }
-
-    public bool ButtonDown()
-    {
-        return Input.GetButtonDown("Fire1");
-    }
-
-
-    void PollLoggedData(object o, System.EventArgs e)
-    {
-        if (text != null)
-        {
-            text = fileReader.ReadLine();
-            string[] parts = text.Split(' ');
-            if (parts.Length == 2 && parts[0] == "v")
+            if (useRecordedData)
             {
-                float pressure = float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture.NumberFormat) / 100.0f;
-                this.pressure = pressure;
+                pollTimer += Time.deltaTime;
+                if (pollTimer > pollTimerInterval)
+                {
+                    pollTimer = 0;
+                    PollLoggedData();
+                }
             }
+        }
 
-            if (loop && fileReader.EndOfStream)
+        /// <summary>
+        /// If useRecordedData is set to true, data is supplied from the RecordedArray, else pressure data is streamed direct from the device.
+        /// </summary>
+        /// <returns>pressure data reported from device or log file with a range of -1 - 1.</returns>
+        public float Pressure()
+        {
+            if (useRecordedData)
             {
-                fileReader.DiscardBufferedData();
-                fileReader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+                return pressure;
+            }
+            else
+            {
+                return Input.GetAxisRaw("Horizontal");
+            }
+        }
+
+        /// <summary>
+        /// Is the Fizzyo device button down?
+        /// </summary>
+        /// <returns></returns>
+        public bool ButtonDown()
+        {
+            return Input.GetButtonDown("Fire1");
+        }
+
+        /// <summary>
+        /// Pull the next recorded value from the RecordedArray
+        /// </summary>
+        void PollLoggedData()
+        {
+            if (recordedData != null && recordedData.Length > 0)
+            {
+                text = recordedData[recordedIndex];
+                recordedIndex++;
+                string[] parts = text.Split(' ');
+                if (parts.Length == 2 && parts[0] == "v")
+                {
+                    float pressure = float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture.NumberFormat) / 100.0f;
+                    this.pressure = pressure;
+                }
+
+                if (loop && recordedIndex >= recordedData.Length)
+                {
+                    recordedIndex = 0;
+                }
             }
         }
     }
