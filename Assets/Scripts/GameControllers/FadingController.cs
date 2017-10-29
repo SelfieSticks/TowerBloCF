@@ -26,6 +26,7 @@ public class FadingController : MonoBehaviour
     /// The rate at which fog clears after breathThreshold has been observed.
     /// </summary>
     [SerializeField] private float clearingRate = 0.1f;
+    [SerializeField] private AudioSource fogClearingSound;
 
     private Image fadingImage;
 
@@ -55,8 +56,10 @@ public class FadingController : MonoBehaviour
 
     private void Update()
     {
-        if(ShouldClear())
+        if(ShouldClear() && isFading)
         {
+            if(!fogClearingSound.isPlaying && fadingImage.color.a > 0.6)
+                fogClearingSound.Play();
             StartCoroutine(ResetFading());
         }
 
