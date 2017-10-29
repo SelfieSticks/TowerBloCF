@@ -12,12 +12,19 @@ public class CubeState : MonoBehaviour {
     [SerializeField] private float goldAccuracy = .05f;
     [SerializeField] private float litAccuracy = .15f;
 
+    [SerializeField] private AudioClip normalSound;
+    [SerializeField] private AudioClip goldSound;
+
+    private AudioSource audioSource;
     private Renderer renderer;
 
 	// Use this for initialization
 	void Start () {
         renderer = GetComponent<Renderer>();
         renderer.material = normal;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = normalSound;
 	}
 	
     private void LightOn()
@@ -28,6 +35,7 @@ public class CubeState : MonoBehaviour {
     private void Gold()
     {
         renderer.material = gold;
+        audioSource.clip = goldSound;
     }
 
     internal void Set(float acc)
@@ -39,5 +47,6 @@ public class CubeState : MonoBehaviour {
         {
             LightOn();
         }
+        audioSource.Play();
     }
 }
