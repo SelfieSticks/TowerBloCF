@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
-public class DurationFill : MonoBehaviour {
-
-    private BreathRecogniser br;
+public class DurationFill : MonoBehaviour
+{
     private UICircle circle;
 
-    void Start () {
+    void Start()
+    {
         circle = GetComponent<UICircle>();
-
-        br = new BreathRecogniser();
-	}
+    }
 
     private void Update()
     {

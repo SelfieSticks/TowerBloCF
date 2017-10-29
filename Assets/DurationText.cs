@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DurationText : MonoBehaviour {
-
+public class DurationText : MonoBehaviour
+{
     private Text text;
     void Start()
     {
