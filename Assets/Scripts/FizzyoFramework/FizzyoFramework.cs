@@ -122,6 +122,11 @@ namespace Fizzyo
             User = new FizzyoUser();
             Device = new FizzyoDevice();
             Recogniser = new BreathRecogniser();
+
+            // TODO: calibrate properly
+            Recogniser.MaxBreathLength = 3.0f;
+            Recogniser.MaxPressure = Device.maxPressureCalibrated;
+
             Achievments = new FizzyoAchievments();
         }
 
