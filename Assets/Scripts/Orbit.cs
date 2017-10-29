@@ -5,7 +5,7 @@ using UnityEngine;
 public class Orbit : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    [SerializeField] private float cameraDistance = 10;
+    public float cameraDistance = 10;
     [SerializeField] private float rotationSpeed = 10;
     [SerializeField] private float verticalOffsetFromTarget = 4;
 
