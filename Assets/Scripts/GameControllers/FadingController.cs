@@ -75,6 +75,6 @@ public class FadingController : MonoBehaviour
 
     private bool ShouldClear()
     {
-        return FizzyoDevice.Instance().Pressure() >= breathThreshold;
+        return FizzyoFramework.Instance.Device.Pressure() >= breathThreshold;
     }
 }

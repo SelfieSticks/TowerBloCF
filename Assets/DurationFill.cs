@@ -1,17 +1,22 @@
-﻿using System.Collections;
+﻿using Fizzyo;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
 public class DurationFill : MonoBehaviour {
-    
-	void Start () {
-        var circle = GetComponent<UICircle>();
-        var calibrationManager = GetComponentInParent<CalibrationManager>();
 
-        calibrationManager.CurrentBreathDurationChanged += (s, old, curr) =>
-        {
-            circle.FillPercent = (int) (100 * (curr / calibrationManager.maxBreathDuration));
-        };
+    private BreathRecogniser br;
+    private UICircle circle;
+
+    void Start () {
+        circle = GetComponent<UICircle>();
+
+        br = new BreathRecogniser();
 	}
+
+    private void Update()
+    {
+        circle.FillPercent = (int)(100 * (FizzyoFramework.Instance.Recogniser.BreathLength / FizzyoFramework.Instance.Recogniser.MaxBreathLength));
+    }
 }

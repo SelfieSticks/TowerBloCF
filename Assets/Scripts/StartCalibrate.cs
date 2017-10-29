@@ -26,7 +26,7 @@ public class StartCalibrate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float pressure = FizzyoDevice.Instance().Pressure();
+        float pressure = FizzyoFramework.Instance.Device.Pressure();
         //float y = transform.position.y + ((pressure * 5) - pressureBar.transform.position.y) * smoothing;
         //pressureBar.transform.position = new Vector3(pressureBar.transform.position.x,y , pressureBar.transform.position.z);
         slider.value = (pressure * 5) * smoothing;

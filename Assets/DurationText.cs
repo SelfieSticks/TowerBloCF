@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class DurationText : MonoBehaviour {
 
+    private Text text;
     void Start()
     {
-        var text = GetComponent<Text>();
-        var calibrationManager = GetComponentInParent<CalibrationManager>();
+        text = GetComponent<Text>();
+    }
 
-        calibrationManager.CurrentBreathDurationChanged += (s, old, curr) =>
-        {
-            text.text = string.Format("{0:0.0}s", curr);
-        };
+    private void Update()
+    {
+        text.text = string.Format("{0:0.0}s", Fizzyo.FizzyoFramework.Instance.Recogniser.BreathLength);
     }
 
 }

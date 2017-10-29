@@ -16,25 +16,15 @@ public class PressureSlider : MonoBehaviour
     void Start()
     {
         slider = GetComponent<Slider>();
-        slider.minValue = FizzyoDevice.MinMeasurablePressure;
-        slider.maxValue = FizzyoDevice.MaxMeasurablePressure;
+        slider.minValue = 0;
+        slider.maxValue = FizzyoFramework.Instance.Device.maxPressureCalibrated;
         sliderFillImage.color = Color.red;
-
-        var calibrationManager = GetComponentInParent<CalibrationManager>();
-
-        calibrationManager.PressureChanged += (s, old, curr) => {
-            slider.value = curr;
-            valueText.text = slider.value.ToString();
-
-            var color = sliderFillImage.color;
-            color.r = 1 - curr;
-            color.g = curr;
-            sliderFillImage.color = color;
-        };
     }
 
     void Update()
     {
+        PressureChanged(FizzyoFramework.Instance.Device.Pressure());
+
         // Push maximum pressure mark up
         if (slider.handleRect.position.y > maximumPressureMark.position.y)
         {
@@ -42,5 +32,16 @@ public class PressureSlider : MonoBehaviour
                 slider.handleRect.position.y, maximumPressureMark.position.z);
         }
         
+    }
+
+    void PressureChanged(float pressure)
+    {
+        slider.value = pressure;
+        valueText.text = slider.value.ToString();
+
+        var color = sliderFillImage.color;
+        color.r = 1 - pressure;
+        color.g = pressure;
+        sliderFillImage.color = color;
     }
 }
