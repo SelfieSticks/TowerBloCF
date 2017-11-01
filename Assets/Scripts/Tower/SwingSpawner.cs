@@ -13,8 +13,7 @@ public class SwingSpawner : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        joint = Instantiate(prefabToSpawn, this.transform.position, Quaternion.identity).GetComponent<HingeJoint>();
-        canDrop = true;
+        SpawnBlock();
     }
 
     // Update is called once per frame
@@ -36,7 +35,13 @@ public class SwingSpawner : MonoBehaviour {
         canDrop = false;
 
         yield return new WaitForSeconds(.5f);
-        joint = Instantiate(prefabToSpawn, this.transform.position, Quaternion.identity).GetComponent<HingeJoint>();
+        SpawnBlock();
+    }
+
+    private void SpawnBlock() {
+        GameObject block = Instantiate(prefabToSpawn, this.transform.position, Quaternion.identity);
+        joint = block.GetComponent<HingeJoint>();
+        joint.anchor = transform.position;
         canDrop = true;
     }
 }
