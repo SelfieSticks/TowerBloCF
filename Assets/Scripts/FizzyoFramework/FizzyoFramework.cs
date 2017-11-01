@@ -136,8 +136,8 @@ namespace Fizzyo
         {
             Debug.Log("[FizzyoFramework] Start.");
 
-            if (_instance != null)
-                return;
+            //if (_instance != null)
+            //    return;
 
             DontDestroyOnLoad(gameObject);
 
