@@ -8,6 +8,9 @@ public class SwingSpawner : MonoBehaviour {
     [SerializeField] private HuffController huff;
 
     private HingeJoint joint;
+    private Rigidbody swingingBody;
+    private Vector3 savedVelocity;
+    private Vector3 savedAngularVelocity;
     private bool canDrop;
 
     // Use this for initialization
@@ -17,8 +20,21 @@ public class SwingSpawner : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        if (huff.IsHuffing && !swingingBody.isKinematic)
+        {
+            savedVelocity = swingingBody.velocity;
+            savedAngularVelocity = swingingBody.angularVelocity;
+            swingingBody.isKinematic = true;
+        }
+
+        if (!huff.IsHuffing && swingingBody.isKinematic) {
+            swingingBody.isKinematic = false;
+            swingingBody.AddForce(savedVelocity, ForceMode.VelocityChange);
+            swingingBody.AddTorque(savedAngularVelocity, ForceMode.VelocityChange);
+        }
+
         if (canDrop && !huff.IsHuffing && (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0))
         {
             // Remove rope
@@ -42,6 +58,7 @@ public class SwingSpawner : MonoBehaviour {
         GameObject block = Instantiate(prefabToSpawn, this.transform.position, Quaternion.identity);
         joint = block.GetComponent<HingeJoint>();
         joint.anchor = transform.position;
+        swingingBody = block.GetComponent<Rigidbody>();
         canDrop = true;
     }
 }
