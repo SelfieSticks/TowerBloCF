@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CubeState))]
 public class AttachOnCollision : MonoBehaviour
 {
     public bool isAttached;
@@ -46,7 +48,9 @@ public class AttachOnCollision : MonoBehaviour
 
             StartCoroutine(Solidify());
 
-            //ScoreManager.OnAttach(gameObject);
+            var lm = GameObject.FindGameObjectWithTag("LevelManager");
+            if(lm)
+                lm.GetComponent<BlockEventBus>().OnBlockLand(state);
         }
     }
 
