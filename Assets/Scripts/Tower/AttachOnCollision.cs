@@ -24,34 +24,26 @@ public class AttachOnCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!isTouching)
+        if (!isTouching && collision.gameObject.GetComponent<AttachOnCollision>() != null)
         {
             isTouching = true;
             touchCollision = collision;
 
             var acc = Accuracy(transform.position, collision.transform.position);
             state.Set(acc);
-        }
-
-        if (isTouching && collision.gameObject != touchCollision.gameObject
-            && !isAttached && !collision.gameObject.GetComponent<AttachOnCollision>().isAttached)
-        {
-            // TODO: Use collision.contacts to adjust the break force
-            // and possibly don't add a joint if collision is awkward.
-            // var body = collision.gameObject.GetComponent<Rigidbody>();
-
-            var joint = gameObject.AddComponent<FixedJoint>();
-            joint.breakForce = breakForce;
-
-            isAttached = true;
-            joint.connectedBody = touchCollision.rigidbody;
 
             StartCoroutine(Solidify());
-
-            var lm = GameObject.FindGameObjectWithTag("LevelManager");
-            if(lm)
-                lm.GetComponent<BlockEventBus>().OnBlockLand(state);
         }
+
+        if (!isAttached && collision.gameObject.tag.Equals("Ground"))
+        {
+            Destroy(gameObject);
+        }
+
+        var lm = GameObject.FindGameObjectWithTag("LevelManager");
+        if(lm)
+            lm.GetComponent<BlockEventBus>().OnBlockLand(state);
+
     }
 
     private float Accuracy(Vector3 a, Vector3 b)
@@ -61,6 +53,14 @@ public class AttachOnCollision : MonoBehaviour
 
     private IEnumerator Solidify()
     {
+        yield return new WaitForSeconds(1f);
+
+        var joint = gameObject.AddComponent<FixedJoint>();
+        joint.breakForce = breakForce;
+
+        isAttached = true;
+        joint.connectedBody = touchCollision.rigidbody;
+
         // TODO: perhaps should be related to the # of blocks attached / dropped since this one instead
         yield return new WaitForSeconds(10);
         body.isKinematic = true;
