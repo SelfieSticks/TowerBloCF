@@ -12,6 +12,7 @@ public class AttachOnCollision : MonoBehaviour
     private Collision touchCollision;
     private Rigidbody body;
     private CubeState state;
+    private float touchY;
 
     [SerializeField] private float breakForce;
 
@@ -28,6 +29,7 @@ public class AttachOnCollision : MonoBehaviour
         {
             isTouching = true;
             touchCollision = collision;
+            touchY = transform.position.y;
 
             var acc = Accuracy(transform.position, collision.transform.position);
             state.Set(acc);
@@ -55,11 +57,14 @@ public class AttachOnCollision : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        var joint = gameObject.AddComponent<FixedJoint>();
-        joint.breakForce = breakForce;
+        if (Mathf.Abs(touchY - transform.position.y) <= 0.3)
+        {
+            var joint = gameObject.AddComponent<FixedJoint>();
+            joint.breakForce = breakForce;
 
-        isAttached = true;
-        joint.connectedBody = touchCollision.rigidbody;
+            isAttached = true;
+            joint.connectedBody = touchCollision.rigidbody;
+        }
 
         // TODO: perhaps should be related to the # of blocks attached / dropped since this one instead
         yield return new WaitForSeconds(10);
