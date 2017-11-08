@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CubeState))]
 public class AttachOnCollision : MonoBehaviour
 {
     public bool isAttached;
@@ -37,6 +39,11 @@ public class AttachOnCollision : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        var lm = GameObject.FindGameObjectWithTag("LevelManager");
+        if(lm)
+            lm.GetComponent<BlockEventBus>().OnBlockLand(state);
+
     }
 
     private float Accuracy(Vector3 a, Vector3 b)
