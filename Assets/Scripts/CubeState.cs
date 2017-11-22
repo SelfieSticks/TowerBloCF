@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,12 +7,16 @@ public class CubeState : MonoBehaviour {
     [SerializeField] private Material normal;
     [SerializeField] private Material lit;
     [SerializeField] private Material gold;
+    [SerializeField] private Material[] randMaterial;
 
     [SerializeField] private float goldAccuracy = .05f;
     [SerializeField] private float litAccuracy = .15f;
 
     [SerializeField] private AudioClip normalSound;
     [SerializeField] private AudioClip goldSound;
+    [SerializeField] private AudioClip randomSound;
+
+    [SerializeField] public bool hackyRandomBool;
 
     public BlockType CubeType { get; private set; }
 
@@ -28,6 +31,10 @@ public class CubeState : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = normalSound;
+
+        if(hackyRandomBool) {
+            Rand();
+        }
 	}
 	
     private void LightOn()
@@ -43,8 +50,21 @@ public class CubeState : MonoBehaviour {
         audioSource.clip = goldSound;
     }
 
+    private void Rand() 
+    {
+        CubeType = BlockType.RANDOM;
+        renderer.material = randMaterial[Random.Range(0, randMaterial.Length - 1)];
+        audioSource.clip = randomSound;
+    }
+
     internal void Set(float acc)
     {
+        if(CubeType == BlockType.RANDOM) 
+        {
+            audioSource.Play();
+            return;
+        }
+
         if (acc <= goldAccuracy)
         {
             Gold();

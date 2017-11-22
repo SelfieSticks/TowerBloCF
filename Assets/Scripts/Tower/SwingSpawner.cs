@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SwingSpawner : MonoBehaviour {
 
-    [SerializeField] private GameObject normalBlockPrefab;
-    [SerializeField] private GameObject[] randomBlockPrefabs;
+    [SerializeField] private GameObject prefabToSpawn;
     [SerializeField] private HuffController huff;
 
     [SerializeField] private int randomBlockIntervalMin;
@@ -60,17 +59,17 @@ public class SwingSpawner : MonoBehaviour {
     }
 
     private void SpawnBlock() {
-        GameObject prefabToSpawn = normalBlockPrefab;
-
-        if(nextRandomBlock == 0) {
-            prefabToSpawn = randomBlockPrefabs[Random.Range(0, randomBlockPrefabs.Length - 1)];
-            nextRandomBlock = Random.Range(randomBlockIntervalMin, randomBlockIntervalMax);
-        }
-
         GameObject block = Instantiate(prefabToSpawn, this.transform.position, Quaternion.identity);
         joint = block.GetComponent<HingeJoint>();
         joint.anchor = transform.position;
         swingingBody = block.GetComponent<Rigidbody>();
         canDrop = true;
+
+        if (nextRandomBlock == 0) {
+            nextRandomBlock = Random.Range(randomBlockIntervalMin, randomBlockIntervalMax);
+            block.GetComponent<CubeState>().hackyRandomBool = true;
+        } else {
+            nextRandomBlock--;
+        }
     }
 }
