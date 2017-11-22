@@ -17,6 +17,7 @@ public class ScoreTracker : StatTracker
     [SerializeField] private int litScore = 3;
     [SerializeField] private int goldScore = 5;
     [SerializeField] private int diamondScore = 10;
+    [SerializeField] private int randomScore = 10;
     private int[] cubeScores;
 
     private BlockType lastBlockType;
@@ -24,7 +25,7 @@ public class ScoreTracker : StatTracker
     protected override void Awake()
     {
         base.Awake();
-        cubeScores = new int[]{ normalScore, litScore, goldScore, diamondScore };
+        cubeScores = new int[]{ normalScore, litScore, goldScore, diamondScore, randomScore };
     }
 
     void Update() 

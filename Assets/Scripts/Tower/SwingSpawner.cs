@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class SwingSpawner : MonoBehaviour {
 
-    [SerializeField] private GameObject prefabToSpawn;
+    [SerializeField] private GameObject normalBlockPrefab;
+    [SerializeField] private GameObject[] randomBlockPrefabs;
     [SerializeField] private HuffController huff;
+
+    [SerializeField] private int randomBlockIntervalMin;
+    [SerializeField] private int randomBlockIntervalMax;
+    [SerializeField] private int nextRandomBlock;
 
     private HingeJoint joint;
     private Rigidbody swingingBody;
@@ -41,7 +46,7 @@ public class SwingSpawner : MonoBehaviour {
             Destroy(joint.GetComponent<LineRenderer>());
 
             joint.breakForce = 0;
-            this.transform.Translate(Vector3.up);
+            transform.Translate(Vector3.up);
             StartCoroutine(WaitAndSpawn());
         }
     }
@@ -55,6 +60,13 @@ public class SwingSpawner : MonoBehaviour {
     }
 
     private void SpawnBlock() {
+        GameObject prefabToSpawn = normalBlockPrefab;
+
+        if(nextRandomBlock == 0) {
+            prefabToSpawn = randomBlockPrefabs[Random.Range(0, randomBlockPrefabs.Length - 1)];
+            nextRandomBlock = Random.Range(randomBlockIntervalMin, randomBlockIntervalMax);
+        }
+
         GameObject block = Instantiate(prefabToSpawn, this.transform.position, Quaternion.identity);
         joint = block.GetComponent<HingeJoint>();
         joint.anchor = transform.position;

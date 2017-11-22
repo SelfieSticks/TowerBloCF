@@ -33,9 +33,9 @@ public class AchievementManager : StatTracker
         {
             if (st.Score >= 10000)
                 AcquireAchievement(2);
-            if (st.Score >= 1000)
+            else if (st.Score >= 1000)
                 AcquireAchievement(1);
-            if (st.Score >= 100)
+            else if (st.Score >= 100)
                 AcquireAchievement(0);
         }
 	}

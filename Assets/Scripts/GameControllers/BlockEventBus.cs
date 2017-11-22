@@ -7,7 +7,8 @@ public enum BlockType
     NORMAL,
     LIT,
     GOLD,
-    DIAMOND
+    DIAMOND,
+    RANDOM
 }
 
 public class BlockEventBus : MonoBehaviour 
