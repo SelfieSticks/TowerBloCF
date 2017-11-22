@@ -245,10 +245,17 @@ MonoBehaviour:
   normal: {fileID: 2100000, guid: af438e5dc84e446d5aecf508f220bc1b, type: 2}
   lit: {fileID: 2100000, guid: d545dc95cd07d4b4e9024c65c2b2e66b, type: 2}
   gold: {fileID: 2100000, guid: b4695305ea9b79041b8ba5d9f2bb0977, type: 2}
+  randMaterial:
+  - {fileID: 2100000, guid: 8222d84a5a4ae9c4893db644f5a5170a, type: 2}
+  - {fileID: 2100000, guid: 378c8a513eb14a54b93ac19dea3ce3ac, type: 2}
+  - {fileID: 2100000, guid: 73c383bf556885049a0d75a43d677ad9, type: 2}
+  - {fileID: 2100000, guid: facc73dd2ae98154598faa498195c9a6, type: 2}
   goldAccuracy: 0.05
   litAccuracy: 0.15
   normalSound: {fileID: 8300000, guid: e271fbfd9fb8e444183c5ee77ad73b83, type: 3}
   goldSound: {fileID: 8300000, guid: ee76d93b591da2e49aea212296fb3c88, type: 3}
+  randomSound: {fileID: 8300000, guid: 486ba3ed5ff01f54c84f39413c4c6807, type: 3}
+  hackyRandomBool: 0
 --- !u!114 &114801949021365256
 MonoBehaviour:
   m_ObjectHideFlags: 1
