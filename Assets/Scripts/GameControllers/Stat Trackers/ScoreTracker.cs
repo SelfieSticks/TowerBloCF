@@ -2,13 +2,13 @@
 using UnityEngine.UI;
 
 [RequireComponent(typeof(BlockEventBus))]
-public class ScoreManager : MonoBehaviour 
+public class ScoreTracker : StatTracker 
 {
     [SerializeField] private Text scoreText;
 
     // 4 types of blocks - normal, lit, gold, diamond
     // Diamond blocks multiply score by x2 for 10s
-    public int Score { get; private set; }
+    [SerializeField] public int Score;
     [SerializeField] private int diamondMultiplier = 2;
     [SerializeField] private float multiplierDuration = 10f;
     private float multiplierTimer = 0;
@@ -21,10 +21,10 @@ public class ScoreManager : MonoBehaviour
 
     private BlockType lastBlockType;
 
-    private void Awake() 
+    protected override void Awake()
     {
+        base.Awake();
         cubeScores = new int[]{ normalScore, litScore, goldScore, diamondScore };
-        GetComponent<BlockEventBus>().BlockLand += ScoreBlock;
     }
 
     void Update() 
@@ -34,7 +34,7 @@ public class ScoreManager : MonoBehaviour
             multiplierTimer = 0f;
     }
 
-    private void ScoreBlock(CubeState state) 
+    protected override void OnBlockLand(CubeState state) 
     {
         BlockType blockType = state.CubeType;
 
@@ -63,13 +63,9 @@ public class ScoreManager : MonoBehaviour
         Score += cubeScore * multiplier;
         lastBlockType = blockType;
 
-        if(scoreText) {
+        if(scoreText) 
+        {
             scoreText.text = "Score: " + Score;
         }
-    }
-
-    private void OnDestroy() 
-    {
-        GetComponent<BlockEventBus>().BlockLand -= ScoreBlock;
     }
 }

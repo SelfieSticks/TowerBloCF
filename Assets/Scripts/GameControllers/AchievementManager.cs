@@ -1,37 +1,71 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(BlockEventBus))]
-public class AchievementManager : MonoBehaviour 
+public class AchievementManager : StatTracker 
 {
-    [SerializeField] private Text blockHeightText;
-    [SerializeField] private Text actualHeightText;
-    
-    // maybe todo?
-    // [SerializeField] private Text blocksDroppedText;
+    private ScoreTracker st;
 
-    private int blockHeight = 0;
-    private float actualHeight = 0;
+    [SerializeField] private Sprite[] banners = new Sprite[100];
 
-    private void Awake() 
+    [SerializeField] private Image banner;
+    [SerializeField] private float bannerDuration = 3.0f;
+    [SerializeField] private float fadeTime = 2.0f;
+
+    private bool[] achievement = new bool[3];
+
+    protected override void Awake() 
     {
-        GetComponent<BlockEventBus>().BlockLand += LandingBlock;
+        base.Awake();
+        st = GetComponent<ScoreTracker>();
     }
 
-    private void LandingBlock(CubeState state) {
-        blockHeight++;
-        actualHeight = Mathf.Max(actualHeight, state.transform.position.y);
-
-        if(blockHeightText) {
-            blockHeightText.text = "Blocks Landed: " + blockHeight;
-        }
-        if(actualHeightText) {
-            actualHeightText.text = "Tower Height: " + string.Format("{0:0.#}", actualHeight) + "m";
-        }
+    protected override void OnBlockEvent() 
+    {
+        CheckAchievements();
     }
 
-    private void OnDestroy() 
+    private void CheckAchievements () 
     {
-        GetComponent<BlockEventBus>().BlockLand -= LandingBlock;
+		if(st) 
+        {
+            if (st.Score >= 10000)
+                AcquireAchievement(2);
+            if (st.Score >= 1000)
+                AcquireAchievement(1);
+            if (st.Score >= 100)
+                AcquireAchievement(0);
+        }
+	}
+
+    private void AcquireAchievement(int achID) 
+    {
+        if(achievement[achID]) {
+            return;
+        }
+        achievement[achID] = true;
+        banner.sprite = banners[achID];
+        StartCoroutine("DisplayBanner");
+    }
+
+    private IEnumerator DisplayBanner() 
+    {
+        // Make the banner visible
+        Color c = banner.color;
+        c.a = 1.0f;
+        banner.color = c;
+        yield return new WaitForSeconds(bannerDuration);
+
+        // Fade the banner
+        float fade = 0.05f / fadeTime;
+        while(banner.color.a != 0) 
+        {
+            c = banner.color;
+            c.a = Mathf.Max(0.0f, c.a - fade);
+            banner.color = c;
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 }

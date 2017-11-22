@@ -12,7 +12,7 @@ public class AttachOnCollision : MonoBehaviour
     private Collision touchCollision;
     private Rigidbody body;
     private CubeState state;
-    private float touchY;
+    private Vector2 touchPos;
 
     [SerializeField] private float breakForce;
 
@@ -28,12 +28,12 @@ public class AttachOnCollision : MonoBehaviour
         if (!isTouching && collision.gameObject.GetComponent<AttachOnCollision>() != null)
         {
             isTouching = true;
-            touchCollision = collision;
-            touchY = transform.position.y;
 
             var acc = Accuracy(transform.position, collision.transform.position);
             state.Set(acc);
 
+            touchCollision = collision;
+            touchPos = transform.position;
             StartCoroutine(Solidify());
         }
 
@@ -41,11 +41,11 @@ public class AttachOnCollision : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
-        var lm = GameObject.FindGameObjectWithTag("LevelManager");
-        if(lm)
-            lm.GetComponent<BlockEventBus>().OnBlockLand(state);
-
+    private void OnCollisionExit(Collision collision) {
+        // Assume one collision at a time as PoC
+        StopCoroutine(Solidify());
     }
 
     private float Accuracy(Vector3 a, Vector3 b)
@@ -55,16 +55,32 @@ public class AttachOnCollision : MonoBehaviour
 
     private IEnumerator Solidify()
     {
-        yield return new WaitForSeconds(1f);
-
-        if (Mathf.Abs(touchY - transform.position.y) <= 0.3)
-        {
-            var joint = gameObject.AddComponent<FixedJoint>();
-            joint.breakForce = breakForce;
-
-            isAttached = true;
-            joint.connectedBody = touchCollision.rigidbody;
+        int stabilityFrames = 0;
+        Vector2 lastPos = transform.position;
+        float lastRot = transform.rotation.z;
+        while(stabilityFrames < 3) {
+            float ds = (lastPos - (Vector2)transform.position).magnitude;
+            float dr = Mathf.Rad2Deg * Mathf.Abs(lastRot - transform.rotation.z);
+            if(ds < 0.1f && dr < 5)
+            {
+                stabilityFrames++;
+            } else {
+                stabilityFrames = 0;
+            }
+            lastPos = transform.position;
+            lastRot = transform.rotation.z;
+            yield return new WaitForSeconds(0.2f);
         }
+
+        var joint = gameObject.AddComponent<FixedJoint>();
+        joint.breakForce = breakForce;
+
+        isAttached = true;
+        joint.connectedBody = touchCollision.rigidbody;
+
+        var lm = GameObject.FindGameObjectWithTag("LevelManager");
+        if (lm)
+            lm.GetComponent<BlockEventBus>().OnBlockLand(state);
 
         // TODO: perhaps should be related to the # of blocks attached / dropped since this one instead
         yield return new WaitForSeconds(10);
