@@ -9,11 +9,17 @@ EditorBuildSettings:
     path: Assets/SCENES/tutorial.unity
     guid: f914c5bdc8be8492491063a819d5a05b
   - enabled: 0
-    path: Assets/playGame.unity
+    path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/SCENES/main menu.unity
     guid: 0f3afe0c059414e4a97274ce14dda7de
   - enabled: 1
     path: Assets/SCENES/playGame.unity
     guid: d04c7891c02ad4dd8bb64fac6ba40ad4
+  - enabled: 1
+    path: Assets/SCENES/Settings.unity
+    guid: 6097068a0b80748e48f194a8eea87907
+  - enabled: 1
+    path: Assets/SCENES/About.unity
+    guid: d8025b6030a1ae449a3fbcee2192045d
