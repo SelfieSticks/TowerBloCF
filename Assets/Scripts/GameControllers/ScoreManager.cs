@@ -17,14 +17,19 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int litScore = 3;
     [SerializeField] private int goldScore = 5;
     [SerializeField] private int diamondScore = 10;
-    private int[] cubeScores;
+    [SerializeField] private Transform spawner;
 
+    private int[] cubeScores;
+    
     private BlockType lastBlockType;
 
     private void Awake() 
     {
         cubeScores = new int[]{ normalScore, litScore, goldScore, diamondScore };
         GetComponent<BlockEventBus>().BlockLand += ScoreBlock;
+        GetComponent<BlockEventBus>().BlockLand += RaiseSpawner;
+
+
     }
 
     void Update() 
@@ -32,6 +37,11 @@ public class ScoreManager : MonoBehaviour
         multiplierTimer -= Time.deltaTime;
         if (multiplierTimer < 0f)
             multiplierTimer = 0f;
+    }
+
+    private void RaiseSpawner(CubeState state)
+    {
+        spawner.Translate(Vector3.up);
     }
 
     private void ScoreBlock(CubeState state) 
