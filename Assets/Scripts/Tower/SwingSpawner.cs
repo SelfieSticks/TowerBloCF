@@ -45,7 +45,6 @@ public class SwingSpawner : MonoBehaviour {
             Destroy(joint.GetComponent<LineRenderer>());
 
             joint.breakForce = 0;
-            transform.Translate(Vector3.up);
             StartCoroutine(WaitAndSpawn());
         }
     }

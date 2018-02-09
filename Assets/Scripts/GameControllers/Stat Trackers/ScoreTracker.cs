@@ -18,14 +18,19 @@ public class ScoreTracker : StatTracker
     [SerializeField] private int goldScore = 5;
     [SerializeField] private int diamondScore = 10;
     [SerializeField] private int randomScore = 10;
-    private int[] cubeScores;
+    //TODO split this into another file
+    [SerializeField] private Transform spawner;
 
+    private int[] cubeScores;
+    
     private BlockType lastBlockType;
 
     protected override void Awake()
     {
         base.Awake();
         cubeScores = new int[]{ normalScore, litScore, goldScore, diamondScore, randomScore };
+        GetComponent<BlockEventBus>().BlockLand += ScoreBlock;
+        GetComponent<BlockEventBus>().BlockLand += RaiseSpawner;
     }
 
     void Update() 
@@ -35,7 +40,12 @@ public class ScoreTracker : StatTracker
             multiplierTimer = 0f;
     }
 
-    protected override void OnBlockLand(CubeState state) 
+    private void RaiseSpawner(CubeState state)
+    {
+        spawner.Translate(Vector3.up);
+    }
+
+    private void ScoreBlock(CubeState state) 
     {
         BlockType blockType = state.CubeType;
 

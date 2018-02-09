@@ -8,11 +8,16 @@ using UnityEngine.UI;
 public class AttachOnCollision : MonoBehaviour
 {
     public bool isAttached;
+
     private bool isTouching;
     private Collision touchCollision;
     private Rigidbody body;
     private CubeState state;
+
     private Vector2 touchPos;
+
+    private float touchY;
+    private BlockEventBus blockEvent;
 
     [SerializeField] private float breakForce;
 
@@ -21,11 +26,19 @@ public class AttachOnCollision : MonoBehaviour
     {
         body = GetComponent<Rigidbody>();
         state = GetComponent<CubeState>();
+
+        blockEvent = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<BlockEventBus>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!isTouching && collision.gameObject.GetComponent<AttachOnCollision>() != null)
+        if (!isAttached && collision.gameObject.tag.Equals("Ground"))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (!isTouching)
         {
             isTouching = true;
 
@@ -37,16 +50,28 @@ public class AttachOnCollision : MonoBehaviour
             StartCoroutine(Solidify());
         }
 
-        if (!isAttached && collision.gameObject.tag.Equals("Ground"))
+        if (isTouching && collision.gameObject != touchCollision.gameObject
+            && !isAttached && !collision.gameObject.GetComponent<AttachOnCollision>().isAttached)
         {
             Destroy(gameObject);
         }
     }
 
-    private void OnCollisionExit(Collision collision) {
+    /*private void OnCollisionExit(Collision collision) {
         // Assume one collision at a time as PoC
         StopCoroutine(Solidify());
-    }
+        // TODO: Use collision.contacts to adjust the break force
+        // and possibly don't add a joint if collision is awkward.
+        // var body = collision.gameObject.GetComponent<Rigidbody>();
+
+        var joint = gameObject.AddComponent<FixedJoint>();
+        joint.breakForce = breakForce;
+
+        isAttached = true;
+        joint.connectedBody = touchCollision.rigidbody;
+
+        StartCoroutine(Solidify());
+    }*/
 
     private float Accuracy(Vector3 a, Vector3 b)
     {
@@ -77,10 +102,14 @@ public class AttachOnCollision : MonoBehaviour
 
         isAttached = true;
         joint.connectedBody = touchCollision.rigidbody;
+        
+        if (blockEvent) {
+            // Follow top block with camera
+            Camera.main.GetComponent<Orbit>().Target = transform;
 
-        var lm = GameObject.FindGameObjectWithTag("LevelManager");
-        if (lm)
-            lm.GetComponent<BlockEventBus>().OnBlockLand(state);
+            // Handle global side-effects of landing block
+            blockEvent.OnBlockLand(state);
+        }
 
         // TODO: perhaps should be related to the # of blocks attached / dropped since this one instead
         yield return new WaitForSeconds(10);
