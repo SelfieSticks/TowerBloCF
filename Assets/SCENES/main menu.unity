@@ -13047,7 +13047,7 @@ Prefab:
     - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
       propertyPath: m_Text
-      value: SinglePlayer
+      value: Single Player
       objectReference: {fileID: 0}
     - target: {fileID: 1915211302471464, guid: d69e97d9351a40240afcf577a3c552f4, type: 2}
       propertyPath: m_Name
@@ -13113,6 +13113,12 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: playGame
       objectReference: {fileID: 0}
+    - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 8eca394408f42428d86a4e7a957f73a2,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d69e97d9351a40240afcf577a3c552f4, type: 2}
   m_IsPrefabParent: 0
@@ -24023,7 +24029,7 @@ Prefab:
     - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
       propertyPath: m_Text
-      value: MuLTIPLAYER
+      value: Multiplayer
       objectReference: {fileID: 0}
     - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
@@ -24050,6 +24056,12 @@ Prefab:
       propertyPath: m_Colors.m_HighlightedColor.b
       value: 0.882353
       objectReference: {fileID: 0}
+    - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 8eca394408f42428d86a4e7a957f73a2,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d69e97d9351a40240afcf577a3c552f4, type: 2}
   m_IsPrefabParent: 0
@@ -37663,7 +37675,7 @@ Prefab:
     - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
       propertyPath: m_Text
-      value: settings
+      value: Settings
       objectReference: {fileID: 0}
     - target: {fileID: 114231495180622934, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
@@ -37710,6 +37722,12 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 8eca394408f42428d86a4e7a957f73a2,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d69e97d9351a40240afcf577a3c552f4, type: 2}
   m_IsPrefabParent: 0
@@ -42982,6 +43000,17 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: About
       objectReference: {fileID: 0}
+    - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
+        type: 2}
+      propertyPath: m_Text
+      value: About CF
+      objectReference: {fileID: 0}
+    - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 8eca394408f42428d86a4e7a957f73a2,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d69e97d9351a40240afcf577a3c552f4, type: 2}
   m_IsPrefabParent: 0
