@@ -3,9 +3,11 @@ using UnityEngine.UI;
 
 public abstract class BlockEventReceiver : MonoBehaviour 
 {
+    private BlockEventBroadcaster beb;
+
     protected virtual void Awake() 
     {
-        var beb = GameObject.FindObjectOfType<BlockEventBroadcaster>();
+        beb = GameObject.FindObjectOfType<BlockEventBroadcaster>();
         beb.BlockLand += OnBlockLand;
         beb.PostBlockUpdate += OnBlockEvent;
     }
@@ -15,7 +17,6 @@ public abstract class BlockEventReceiver : MonoBehaviour
 
     protected virtual void OnDestroy() 
     {
-        var beb = GameObject.FindObjectOfType<BlockEventBroadcaster>();
         if(!beb) 
         {
             return;

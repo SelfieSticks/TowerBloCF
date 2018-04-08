@@ -21,6 +21,8 @@ public class AttachOnCollision : MonoBehaviour
     private TopBlock top;
 
     [SerializeField] private float breakForce;
+    [SerializeField] private float fixTime = 5f;
+
 
     // Use this for initialization
     void Start()
@@ -42,7 +44,7 @@ public class AttachOnCollision : MonoBehaviour
         }
 
         // First contact
-        if (!touched)
+        if (!touched || touchedCollision.collider == null)
         {
             touched = true;
 
@@ -71,21 +73,50 @@ public class AttachOnCollision : MonoBehaviour
 
     private IEnumerator Solidify()
     {
-        int stabilityFrames = 0;
-        Vector2 lastPos = transform.position;
-        float lastRot = transform.rotation.z;
-        while(stabilityFrames < 3) {
-            float ds = (lastPos - (Vector2)transform.position).magnitude;
-            float dr = Mathf.Rad2Deg * Mathf.Abs(lastRot - transform.rotation.z);
-            if(ds < 0.1f && dr < 5)
+        /* Check for n frames of 0.2f that the cube satisfies stability requirements.
+         * Upon failure, attempt another n frames.
+         * 
+         * Requirements:
+         *  - Tilt distance is small (difference of up vectors)
+         *  - XYZ distance is small
+         *  
+         *  Second Derivatives
+         *  - Tilt distance has not changed much
+         *  - XYZ distance has not changed much
+         */
+        {
+            int n = 3;
+            float frameTime = 0.2f;
+
+            float minTilt = 0.2f;
+            float minDTilt = 0.1f;
+            float minDist = 1.3f;
+            float minDDist = 0.2f;
+
+            float lastTilt = (transform.up - touchedCollision.transform.up).magnitude;
+            float lastDist = (transform.position - touchedCollision.transform.position).magnitude;
+            int stabilityFrames = 0;
+            while(stabilityFrames < n) 
             {
-                stabilityFrames++;
-            } else {
-                stabilityFrames = 0;
+                if(touchedCollision.collider == null) {
+                    yield break;
+                }
+
+                float tilt = (transform.up - touchedCollision.transform.up).magnitude;
+                float dist = (transform.position - touchedCollision.transform.position).magnitude;
+
+                float dd = Mathf.Abs(dist - lastDist);
+                float dt = Mathf.Abs(tilt - lastTilt);
+
+                if (dist < minDist && dd < minDDist && tilt < minTilt && dt < minDTilt)
+                {
+                    stabilityFrames++;
+                } else {
+                    stabilityFrames = 0;
+                }
+
+                yield return new WaitForSeconds(frameTime);
             }
-            lastPos = transform.position;
-            lastRot = transform.rotation.z;
-            yield return new WaitForSeconds(0.2f);
         }
 
         var joint = gameObject.AddComponent<FixedJoint>();
@@ -100,7 +131,7 @@ public class AttachOnCollision : MonoBehaviour
         }
 
         // TODO: perhaps should be related to the # of blocks attached / dropped since this one instead
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(fixTime);
         rb.isKinematic = true;
     }
 }

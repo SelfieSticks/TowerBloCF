@@ -17,7 +17,6 @@ public class Spawner : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-
 		if (canDrop && Input.GetKeyDown(KeyCode.Space))
         {
             spawned.useGravity = true;

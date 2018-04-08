@@ -11,11 +11,17 @@ public class HuffController : MonoBehaviour
     [SerializeField] private float huffTime = 4.0f;
 
     private int lastHuff = 0;
+    private int huffs = 0;
+    private int breathsPerSet;
+    private int sets;
 
     public bool IsHuffing { get; private set; }
     // Use this for initialization
     void Start()
     {
+        breathsPerSet = PlayerPrefs.GetInt("cf_breaths");
+        sets = PlayerPrefs.GetInt("cf_sets");
+
         ui = GetComponent<Image>();
         Fizzyo.FizzyoFramework.Instance.Recogniser.BreathStarted += BreathStarted;
     }
@@ -33,7 +39,7 @@ public class HuffController : MonoBehaviour
     private void Update()
     {
         var count = Fizzyo.FizzyoFramework.Instance.Recogniser.BreathCount;
-        if (count == lastHuff + 10 /* < TODO */)
+        if (count == lastHuff + 1 + breathsPerSet /* < TODO */)
         {
             lastHuff = count;
             camera.cameraDistance -= 3;
@@ -51,5 +57,11 @@ public class HuffController : MonoBehaviour
         yield return new WaitForSeconds(huffTime);
 
         ui.sprite = coughSprite;
+
+        huffs++;
+        if(huffs == sets) 
+        {
+            // TODO END GAME
+        }
     }
 }
