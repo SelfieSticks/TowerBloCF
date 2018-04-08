@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(BlockEventBus))]
-public class AchievementManager : StatTracker 
+[RequireComponent(typeof(BlockEvents))]
+public class AchievementManager : BlockEventTarget 
 {
     private ScoreTracker st;
 
@@ -29,7 +29,7 @@ public class AchievementManager : StatTracker
 
     private void CheckAchievements () 
     {
-		if(st) 
+		if(st != null) 
         {
             if (st.Score >= 10000)
                 AcquireAchievement(2);
