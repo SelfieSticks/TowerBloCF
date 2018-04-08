@@ -17,7 +17,7 @@ public class AttachOnCollision : MonoBehaviour
     private Vector2 touchPos;
 
     private float touchY;
-    private BlockEventBus blockEvent;
+    private BlockEvents blockEvent;
 
     [SerializeField] private float breakForce;
 
@@ -27,7 +27,7 @@ public class AttachOnCollision : MonoBehaviour
         body = GetComponent<Rigidbody>();
         state = GetComponent<CubeState>();
 
-        blockEvent = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<BlockEventBus>();
+        blockEvent = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<BlockEvents>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -104,9 +104,6 @@ public class AttachOnCollision : MonoBehaviour
         joint.connectedBody = touchCollision.rigidbody;
         
         if (blockEvent) {
-            // Follow top block with camera
-            Camera.main.GetComponent<Orbit>().Target = transform;
-
             // Handle global side-effects of landing block
             blockEvent.OnBlockLand(state);
         }

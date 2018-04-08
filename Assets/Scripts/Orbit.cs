@@ -5,21 +5,15 @@ using UnityEngine;
 public class Orbit : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    public Transform Target {
-        get { return target; }
-        set
-        {
-            target = value;
-            interpolatedTraget = target.position;
-        }
-    }
     public float cameraDistance = 10;
-    [SerializeField] private float rotationSpeed = 10;
+    [SerializeField] private float rotationSpeed = 0;
     [SerializeField] private float verticalOffsetFromTarget = 4;
 
     private Vector3 cameraRotation;
     private float cameraAngle;
-    private Vector3 interpolatedTraget;
+    private Vector3 interpolatedTarget;
+
+    private BlockEvents blockEvent;
 
     private void Start()
     {
@@ -35,9 +29,9 @@ public class Orbit : MonoBehaviour
         cameraRotation.z = cameraDistance * Mathf.Cos(cameraAngle);
 
         cameraRotation.y = Mathf.Lerp(cameraRotation.y, target.position.y + verticalOffsetFromTarget, .1f);
-        interpolatedTraget.y = cameraRotation.y;
+        interpolatedTarget.y = cameraRotation.y;
     }
-    
+
     private void LateUpdate()
     {
         SetCameraTransform();
@@ -50,6 +44,6 @@ public class Orbit : MonoBehaviour
         transform.localPosition = cameraRotation;
 
         // Set the camera to look towards the Player model
-        transform.LookAt(interpolatedTraget);
+        transform.LookAt(interpolatedTarget);
     }
 }
