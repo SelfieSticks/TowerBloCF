@@ -31,9 +31,7 @@ public class MusicController : MonoBehaviour {
             return;
         }
 
-        if(musicSet == null) {
-            Debug.Log("Empty Music Set!");
-        } else if(!audsrc.isPlaying) {
+        if(!audsrc.isPlaying) {
             int setLength = musicSet.Length;
             if(setLength > 0) {
                 audsrc.PlayOneShot(musicSet[trackIndex]);

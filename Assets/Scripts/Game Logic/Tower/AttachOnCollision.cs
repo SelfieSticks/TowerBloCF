@@ -9,73 +9,64 @@ public class AttachOnCollision : MonoBehaviour
 {
     public bool isAttached;
 
-    private bool isTouching;
-    private Collision touchCollision;
-    private Rigidbody body;
-    private CubeState state;
+    private bool touched;
+    private Collision touchedCollision;
+    private Rigidbody rb;
+    private CubeState cubeState;
 
     private Vector2 touchPos;
 
     private float touchY;
-    private BlockEvents blockEvent;
+    private BlockEventBroadcaster blockEventBroadcaster;
+    private TopBlock top;
 
     [SerializeField] private float breakForce;
 
     // Use this for initialization
     void Start()
     {
-        body = GetComponent<Rigidbody>();
-        state = GetComponent<CubeState>();
+        rb = GetComponent<Rigidbody>();
+        cubeState = GetComponent<CubeState>();
 
-        blockEvent = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<BlockEvents>();
+        blockEventBroadcaster = FindObjectOfType<BlockEventBroadcaster>();
+        top = FindObjectOfType<TopBlock>(); // Unused, maybe for attaching to the top block only?
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Hit the ground
         if (!isAttached && collision.gameObject.tag.Equals("Ground"))
         {
             Destroy(gameObject);
             return;
         }
 
-        if (!isTouching)
+        // First contact
+        if (!touched)
         {
-            isTouching = true;
+            touched = true;
 
             var acc = Accuracy(transform.position, collision.transform.position);
-            state.Set(acc);
+            cubeState.Set(acc);
 
-            touchCollision = collision;
+            touchedCollision = collision;
             touchPos = transform.position;
             StartCoroutine(Solidify());
         }
 
-        if (isTouching && collision.gameObject != touchCollision.gameObject
+        // Secondary collision with a non-tower block, before attaching
+        if (touched && collision.gameObject != touchedCollision.gameObject
             && !isAttached && !collision.gameObject.GetComponent<AttachOnCollision>().isAttached)
         {
             Destroy(gameObject);
         }
     }
 
-    /*private void OnCollisionExit(Collision collision) {
-        // Assume one collision at a time as PoC
-        StopCoroutine(Solidify());
-        // TODO: Use collision.contacts to adjust the break force
-        // and possibly don't add a joint if collision is awkward.
-        // var body = collision.gameObject.GetComponent<Rigidbody>();
-
-        var joint = gameObject.AddComponent<FixedJoint>();
-        joint.breakForce = breakForce;
-
-        isAttached = true;
-        joint.connectedBody = touchCollision.rigidbody;
-
-        StartCoroutine(Solidify());
-    }*/
-
     private float Accuracy(Vector3 a, Vector3 b)
     {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
+        float dx = a.x - b.x;
+        float dz = a.z - b.z;
+        return Mathf.Sqrt(dx * dx + dz * dz);
     }
 
     private IEnumerator Solidify()
@@ -101,15 +92,15 @@ public class AttachOnCollision : MonoBehaviour
         joint.breakForce = breakForce;
 
         isAttached = true;
-        joint.connectedBody = touchCollision.rigidbody;
+        joint.connectedBody = touchedCollision.rigidbody;
         
-        if (blockEvent) {
+        if (blockEventBroadcaster) {
             // Handle global side-effects of landing block
-            blockEvent.OnBlockLand(state);
+            blockEventBroadcaster.OnBlockLand(cubeState);
         }
 
         // TODO: perhaps should be related to the # of blocks attached / dropped since this one instead
         yield return new WaitForSeconds(10);
-        body.isKinematic = true;
+        rb.isKinematic = true;
     }
 }

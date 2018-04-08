@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(BlockEvents))]
-public class AchievementManager : BlockEventTarget 
+[RequireComponent(typeof(BlockEventBroadcaster))]
+public class AchievementManager : BlockEventReceiver 
 {
     private ScoreTracker st;
 

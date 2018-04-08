@@ -260,7 +260,7 @@ MonoBehaviour:
   normalSound: {fileID: 8300000, guid: e271fbfd9fb8e444183c5ee77ad73b83, type: 3}
   goldSound: {fileID: 8300000, guid: ee76d93b591da2e49aea212296fb3c88, type: 3}
   randomSound: {fileID: 8300000, guid: 486ba3ed5ff01f54c84f39413c4c6807, type: 3}
-  hackyRandomBool: 0
+  randomBlock: 0
 --- !u!114 &114801949021365256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -300,7 +300,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: f71b2c568219bfd4ebe55407590102ab, type: 2}
+  - {fileID: 2100000, guid: efc0ecb592edb404ea3c6e6025399609, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -322,7 +322,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 3, z: 0}
+  - {x: 0, y: 8, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.1

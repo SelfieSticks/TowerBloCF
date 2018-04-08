@@ -13,7 +13,7 @@ public class Orbit : MonoBehaviour
     private float cameraAngle;
     private Vector3 interpolatedTarget;
 
-    private BlockEvents blockEvent;
+    private BlockEventBroadcaster blockEvent;
 
     private void Start()
     {

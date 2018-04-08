@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HeightTracker : BlockEventTarget 
+public class HeightTracker : BlockEventReceiver 
 {
     [SerializeField] private Text blockHeightText;
     [SerializeField] private Text actualHeightText;

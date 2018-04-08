@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class BlockEventTarget : MonoBehaviour 
+public abstract class BlockEventReceiver : MonoBehaviour 
 {
     protected virtual void Awake() 
     {
-        var be = GameObject.FindObjectOfType<BlockEvents>();
-        be.BlockLand += OnBlockLand;
-        be.PostBlockUpdate += OnBlockEvent;
+        var beb = GameObject.FindObjectOfType<BlockEventBroadcaster>();
+        beb.BlockLand += OnBlockLand;
+        beb.PostBlockUpdate += OnBlockEvent;
     }
 
     protected virtual void OnBlockLand(CubeState state) {}
@@ -15,7 +15,7 @@ public abstract class BlockEventTarget : MonoBehaviour
 
     protected virtual void OnDestroy() 
     {
-        var beb = GameObject.FindObjectOfType<BlockEvents>();
+        var beb = GameObject.FindObjectOfType<BlockEventBroadcaster>();
         if(!beb) 
         {
             return;

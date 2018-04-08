@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreTracker : BlockEventTarget 
+public class ScoreTracker : BlockEventReceiver 
 {
     [SerializeField] private Text scoreText;
 
@@ -28,8 +28,8 @@ public class ScoreTracker : BlockEventTarget
     {
         base.Awake();
         cubeScores = new int[]{ normalScore, litScore, goldScore, diamondScore, randomScore };
-        GetComponent<BlockEvents>().BlockLand += ScoreBlock;
-        GetComponent<BlockEvents>().BlockLand += RaiseSpawner;
+        GetComponent<BlockEventBroadcaster>().BlockLand += ScoreBlock;
+        GetComponent<BlockEventBroadcaster>().BlockLand += RaiseSpawner;
     }
 
     void Update() 

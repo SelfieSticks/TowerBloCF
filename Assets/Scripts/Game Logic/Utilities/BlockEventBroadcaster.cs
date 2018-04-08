@@ -11,7 +11,7 @@ public enum BlockType
     RANDOM
 }
 
-public class BlockEvents : MonoBehaviour 
+public class BlockEventBroadcaster : MonoBehaviour 
 {
     public delegate void Block(CubeState state);
     public event Block BlockLand;
