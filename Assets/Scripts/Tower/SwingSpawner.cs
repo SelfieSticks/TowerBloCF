@@ -66,7 +66,7 @@ public class SwingSpawner : MonoBehaviour {
 
         if (nextRandomBlock == 0) {
             nextRandomBlock = Random.Range(randomBlockIntervalMin, randomBlockIntervalMax);
-            block.GetComponent<CubeState>().hackyRandomBool = true;
+            block.GetComponent<CubeState>().randomBlock = true;
         } else {
             nextRandomBlock--;
         }

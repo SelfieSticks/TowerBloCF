@@ -16,7 +16,7 @@ public class CubeState : MonoBehaviour {
     [SerializeField] private AudioClip goldSound;
     [SerializeField] private AudioClip randomSound;
 
-    [SerializeField] public bool hackyRandomBool;
+    [SerializeField] public bool randomBlock;
 
     public BlockType CubeType { get; private set; }
 
@@ -32,7 +32,7 @@ public class CubeState : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = normalSound;
 
-        if(hackyRandomBool) {
+        if(randomBlock) {
             Rand();
         }
 	}
