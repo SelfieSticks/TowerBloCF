@@ -726,9 +726,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831f73812ad602d409f98185d6e90461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  am: {fileID: 0}
-  huffImage: {fileID: 0}
-  camera: {fileID: 93317632}
+  am: {fileID: 1487392447}
+  huffBanner: {fileID: 468121085}
+  orbitCam: {fileID: 93317632}
   huffSprite: {fileID: 21300000, guid: d61ee29bef7511b489683aceb9d9977a, type: 3}
   coughSprite: {fileID: 21300000, guid: 871cc6112af4f414584ded13627974b6, type: 3}
   huffTime: 4
