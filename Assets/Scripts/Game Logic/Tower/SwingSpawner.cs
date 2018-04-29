@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SwingSpawner : MonoBehaviour {
+    //TODO clean up this component
 
     [SerializeField] private GameObject prefabToSpawn;
     [SerializeField] private HuffController huff;
@@ -11,64 +12,66 @@ public class SwingSpawner : MonoBehaviour {
     [SerializeField] private int randomBlockIntervalMax;
     [SerializeField] private int nextRandomBlock;
 
+    private Rigidbody spawnerBody;
+    private float yTop = 10f;
+
     private HingeJoint joint;
-    private Rigidbody swingingBody;
     private Vector3 savedVelocity;
     private Vector3 savedAngularVelocity;
     private bool canDrop;
 
-    // Use this for initialization
+    private int spawnCount;
+
     void Start()
     {
+        spawnerBody = GetComponent<Rigidbody>();
         SpawnBlock();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (huff.IsHuffing && !swingingBody.isKinematic)
-        {
-            savedVelocity = swingingBody.velocity;
-            savedAngularVelocity = swingingBody.angularVelocity;
-            swingingBody.isKinematic = true;
-        }
-
-        if (!huff.IsHuffing && swingingBody.isKinematic) {
-            swingingBody.isKinematic = false;
-            swingingBody.AddForce(savedVelocity, ForceMode.VelocityChange);
-            swingingBody.AddTorque(savedAngularVelocity, ForceMode.VelocityChange);
-        }
-
         if (canDrop && !huff.IsHuffing && (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0))
         {
-            // Remove rope
-            Destroy(joint.GetComponent<LineRenderer>());
+            canDrop = false;
 
-            joint.breakForce = 0;
+            // Remove rope & detach
+            joint.transform.parent = null;
+            Destroy(joint.GetComponent<LineRenderer>());
+            Destroy(joint);
+
+            // Pull rope up
+            transform.position = transform.position + yTop * Vector3.up;
+
             StartCoroutine(WaitAndSpawn());
         }
     }
 
     IEnumerator WaitAndSpawn()
     {
-        canDrop = false;
-
         yield return new WaitForSeconds(.5f);
+
         SpawnBlock();
     }
 
     private void SpawnBlock() {
-        GameObject block = Instantiate(prefabToSpawn, this.transform.position, Quaternion.identity);
-        joint = block.GetComponent<HingeJoint>();
-        joint.anchor = transform.position;
-        swingingBody = block.GetComponent<Rigidbody>();
         canDrop = true;
 
+        GameObject block = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
+        block.name = "Dropped Block (" + spawnCount + ")";
+        block.transform.parent = transform;
+
+        joint = block.GetComponent<HingeJoint>();
+        joint.connectedBody = spawnerBody;
+
+        // Block Randomisation
         if (nextRandomBlock == 0) {
             nextRandomBlock = Random.Range(randomBlockIntervalMin, randomBlockIntervalMax);
             block.GetComponent<CubeState>().randomBlock = true;
         } else {
             nextRandomBlock--;
         }
+
+        spawnCount++;
     }
 }

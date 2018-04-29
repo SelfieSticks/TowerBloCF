@@ -31,9 +31,4 @@ public class Swing : MonoBehaviour
             yield return new WaitForSeconds(secondsBetweenSwings);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
 }

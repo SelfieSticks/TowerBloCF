@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Text))]
-public class SettingValue : MonoBehaviour {
+public class PlayerSettingsIncrementer : MonoBehaviour {
     [SerializeField] public string settingName;
     [SerializeField] public int max;
     [SerializeField] public int min;

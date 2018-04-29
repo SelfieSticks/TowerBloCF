@@ -3,7 +3,7 @@
 public class Follow : MonoBehaviour {
     [SerializeField] private GameObject target;
     [SerializeField] private float lerpRate = 0.25f;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] public Vector3 offset;
     [SerializeField] private bool lockX;
     [SerializeField] private bool lockY;
     [SerializeField] private bool lockZ;

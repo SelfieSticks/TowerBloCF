@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CubeState : MonoBehaviour {
+    /// <summary>
+    /// Whether this block is part of the tower or not
+    /// </summary>
+    public bool towerBlock;
 
     [SerializeField] private Material normal;
     [SerializeField] private Material lit;

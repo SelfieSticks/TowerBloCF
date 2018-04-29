@@ -7,24 +7,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CubeState))]
 public class AttachOnCollision : MonoBehaviour
 {
-    public bool isAttached;
-
-    private bool touched;
-    private Collision touchedCollision;
     private Rigidbody rb;
     private CubeState cubeState;
-
-    private Vector2 touchPos;
-
-    private float touchY;
-    private BlockEventBroadcaster blockEventBroadcaster;
+    
     private TopBlock top;
+    private BlockEventBroadcaster blockEventBroadcaster;
 
-    [SerializeField] private float breakForce;
-    [SerializeField] private float fixTime = 5f;
-
-
-    // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,42 +24,42 @@ public class AttachOnCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Hit the ground
-        if (!isAttached && collision.gameObject.tag.Equals("Ground"))
-        {
+        // Attached blocks are unchanged on collision
+        if(cubeState.towerBlock) {
+            return;
+        }
+
+        // Hitting the ground causes destruction
+        if (collision.gameObject.tag.Equals("Ground")) {
             Destroy(gameObject);
             return;
         }
 
-        // First contact
-        if (!touched || touchedCollision.collider == null)
-        {
-            touched = true;
-
-            var acc = Accuracy(transform.position, collision.transform.position);
+        // Contact with a block
+        var otherCubestate = collision.gameObject.GetComponent<CubeState>();
+        if(otherCubestate) {
+            var acc = HorizontalAccuracy(transform.position, collision.transform.position);
             cubeState.Set(acc);
-
-            touchedCollision = collision;
-            touchPos = transform.position;
-            StartCoroutine(Solidify());
-        }
-
-        // Secondary collision with a non-tower block, before attaching
-        if (touched && collision.gameObject != touchedCollision.gameObject
-            && !isAttached && !collision.gameObject.GetComponent<AttachOnCollision>().isAttached)
-        {
-            Destroy(gameObject);
+            StartCoroutine(Solidify(collision, otherCubestate));
         }
     }
 
-    private float Accuracy(Vector3 a, Vector3 b)
+    private void OnCollisionExit(Collision collision) {
+        StopCoroutine("Solidify");
+    }
+
+    private float HorizontalAccuracy(Vector3 a, Vector3 b)
     {
         float dx = a.x - b.x;
         float dz = a.z - b.z;
         return Mathf.Sqrt(dx * dx + dz * dz);
     }
 
-    private IEnumerator Solidify()
+    /// <summary>
+    /// Attempt to attach one block on to another.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator Solidify(Collision collision, CubeState otherCubeState)
     {
         /* Check for n frames of 0.2f that the cube satisfies stability requirements.
          * Upon failure, attempt another n frames.
@@ -85,6 +73,13 @@ public class AttachOnCollision : MonoBehaviour
          *  - XYZ distance has not changed much
          */
         {
+            float propagateTime = 0.2f;
+
+            // Wait for the other block to be part of the tower
+            while(!otherCubeState.towerBlock) {
+                yield return new WaitForSeconds(propagateTime);
+            }
+
             int n = 3;
             float frameTime = 0.2f;
 
@@ -93,17 +88,19 @@ public class AttachOnCollision : MonoBehaviour
             float minDist = 1.3f;
             float minDDist = 0.2f;
 
-            float lastTilt = (transform.up - touchedCollision.transform.up).magnitude;
-            float lastDist = (transform.position - touchedCollision.transform.position).magnitude;
+            float lastTilt = (transform.up - collision.transform.up).magnitude;
+            float lastDist = (transform.position - collision.transform.position).magnitude;
             int stabilityFrames = 0;
             while(stabilityFrames < n) 
             {
-                if(touchedCollision.collider == null) {
+                yield return new WaitForSeconds(frameTime);
+
+                if(collision.collider == null) {
                     yield break;
                 }
 
-                float tilt = (transform.up - touchedCollision.transform.up).magnitude;
-                float dist = (transform.position - touchedCollision.transform.position).magnitude;
+                float tilt = (transform.up - collision.transform.up).magnitude;
+                float dist = (transform.position - collision.transform.position).magnitude;
 
                 float dd = Mathf.Abs(dist - lastDist);
                 float dt = Mathf.Abs(tilt - lastTilt);
@@ -114,24 +111,19 @@ public class AttachOnCollision : MonoBehaviour
                 } else {
                     stabilityFrames = 0;
                 }
-
-                yield return new WaitForSeconds(frameTime);
             }
         }
 
         var joint = gameObject.AddComponent<FixedJoint>();
-        joint.breakForce = breakForce;
 
-        isAttached = true;
-        joint.connectedBody = touchedCollision.rigidbody;
+        cubeState.towerBlock = true;
+        joint.connectedBody = collision.rigidbody;
         
         if (blockEventBroadcaster) {
             // Handle global side-effects of landing block
             blockEventBroadcaster.OnBlockLand(cubeState);
         }
-
-        // TODO: perhaps should be related to the # of blocks attached / dropped since this one instead
-        yield return new WaitForSeconds(fixTime);
+        
         rb.isKinematic = true;
     }
 }

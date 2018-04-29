@@ -29,7 +29,6 @@ public class ScoreTracker : BlockEventReceiver
         base.Awake();
         cubeScores = new int[]{ normalScore, litScore, goldScore, diamondScore, randomScore };
         GetComponent<BlockEventBroadcaster>().BlockLand += ScoreBlock;
-        GetComponent<BlockEventBroadcaster>().BlockLand += RaiseSpawner;
     }
 
     void Update() 
@@ -37,11 +36,6 @@ public class ScoreTracker : BlockEventReceiver
         multiplierTimer -= Time.deltaTime;
         if (multiplierTimer < 0f)
             multiplierTimer = 0f;
-    }
-
-    private void RaiseSpawner(CubeState state)
-    {
-        spawner.Translate(Vector3.up);
     }
 
     private void ScoreBlock(CubeState state) 
