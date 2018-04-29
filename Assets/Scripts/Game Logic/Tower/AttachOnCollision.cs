@@ -9,8 +9,6 @@ public class AttachOnCollision : MonoBehaviour
 {
     private Rigidbody rb;
     private CubeState cubeState;
-    
-    private TopBlock top;
     private BlockEventBroadcaster blockEventBroadcaster;
 
     void Start()
@@ -19,7 +17,6 @@ public class AttachOnCollision : MonoBehaviour
         cubeState = GetComponent<CubeState>();
 
         blockEventBroadcaster = FindObjectOfType<BlockEventBroadcaster>();
-        top = FindObjectOfType<TopBlock>(); // Unused, maybe for attaching to the top block only?
     }
 
     private void OnCollisionEnter(Collision collision)
