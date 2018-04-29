@@ -8,6 +8,7 @@ public class Orbit : MonoBehaviour
     public float cameraDistance = 10;
     [SerializeField] private float rotationSpeed = 0;
     [SerializeField] private float verticalOffsetFromTarget = 4;
+    [SerializeField] private float minY;
 
     private Vector3 cameraRotation;
     private float cameraAngle;
@@ -45,5 +46,10 @@ public class Orbit : MonoBehaviour
 
         // Set the camera to look towards the Player model
         transform.LookAt(interpolatedTarget);
+
+        // Forces the transform y position to be at least minY
+        Vector3 pos = transform.position;
+        pos.y = Mathf.Max(minY, transform.position.y);
+        transform.position = pos;
     }
 }
