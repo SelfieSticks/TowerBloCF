@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class HuffController : MonoBehaviour
 {
-    private Image ui;
-    [SerializeField] private Orbit camera;
+    [SerializeField] private AchievementManager am;
+    [SerializeField] private Image huffBanner;
+    [SerializeField] private Orbit orbitCam;
     [SerializeField] private Sprite huffSprite;
     [SerializeField] private Sprite coughSprite;
     [SerializeField] private float huffTime = 4.0f;
@@ -19,10 +20,12 @@ public class HuffController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        am = FindObjectOfType<AchievementManager>();
+
         breathsPerSet = PlayerPrefs.GetInt("cf_breaths");
         sets = PlayerPrefs.GetInt("cf_sets");
 
-        ui = GetComponent<Image>();
+        huffBanner = GetComponent<Image>();
         Fizzyo.FizzyoFramework.Instance.Recogniser.BreathStarted += BreathStarted;
     }
 
@@ -31,8 +34,8 @@ public class HuffController : MonoBehaviour
         if (IsHuffing)
         {
             IsHuffing = false;
-            ui.enabled = false;
-            camera.cameraDistance += 3;
+            huffBanner.enabled = false;
+            orbitCam.cameraDistance += 3;
         }
     }
 
@@ -42,7 +45,7 @@ public class HuffController : MonoBehaviour
         if (count == lastHuff + 1 + breathsPerSet /* < TODO */)
         {
             lastHuff = count;
-            camera.cameraDistance -= 3;
+            orbitCam.cameraDistance -= 3;
 
             StartCoroutine(Huff());
         }
@@ -51,12 +54,12 @@ public class HuffController : MonoBehaviour
     IEnumerator Huff()
     {
         IsHuffing = true;
-        ui.enabled = true;
-        ui.sprite = huffSprite;
+        huffBanner.enabled = true;
+        huffBanner.sprite = huffSprite;
 
         yield return new WaitForSeconds(huffTime);
 
-        ui.sprite = coughSprite;
+        huffBanner.sprite = coughSprite;
 
         huffs++;
         if(huffs == sets) 

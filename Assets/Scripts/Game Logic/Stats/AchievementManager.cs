@@ -6,15 +6,18 @@ using UnityEngine.UI;
 [RequireComponent(typeof(BlockEventBroadcaster))]
 public class AchievementManager : BlockEventReceiver 
 {
+    // TODO split banner showing
+
     private ScoreTracker st;
 
     [SerializeField] private Sprite[] banners = new Sprite[100];
-
     [SerializeField] private Image banner;
     [SerializeField] private float bannerDuration = 3.0f;
     [SerializeField] private float fadeTime = 2.0f;
 
     private bool[] achievement = new bool[3];
+
+    private int bannerPriority;
 
     protected override void Awake() 
     {
@@ -46,8 +49,17 @@ public class AchievementManager : BlockEventReceiver
             return;
         }
         achievement[achID] = true;
-        banner.sprite = banners[achID];
-        StartCoroutine("DisplayBanner");
+        DisplayBanner(banners[achID], 1);
+    }
+
+    public void DisplayBanner(Sprite sprite, int priority) {
+        if(bannerPriority < priority) {
+            StopCoroutine(DisplayBanner());
+            bannerPriority = priority;
+
+            banner.sprite = sprite;
+            StartCoroutine(DisplayBanner());
+        }
     }
 
     private IEnumerator DisplayBanner() 
@@ -67,5 +79,7 @@ public class AchievementManager : BlockEventReceiver
             banner.color = c;
             yield return new WaitForSeconds(0.05f);
         }
+
+        bannerPriority = 0;
     }
 }
