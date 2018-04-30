@@ -10,6 +10,7 @@ public class HuffController : MonoBehaviour
     [SerializeField] private Sprite huffSprite;
     [SerializeField] private Sprite coughSprite;
     [SerializeField] private float huffTime = 4.0f;
+    [SerializeField] private Level level;
 
     private int lastHuff = 0;
     private int huffs = 0;
@@ -63,7 +64,7 @@ public class HuffController : MonoBehaviour
         huffs++;
         if(huffs == sets) 
         {
-            // TODO END GAME
+            level.End();
         }
     }
 }

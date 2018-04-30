@@ -882,6 +882,7 @@ MonoBehaviour:
   huffSprite: {fileID: 21300000, guid: d61ee29bef7511b489683aceb9d9977a, type: 3}
   coughSprite: {fileID: 21300000, guid: 871cc6112af4f414584ded13627974b6, type: 3}
   huffTime: 4
+  level: {fileID: 1487392450}
 --- !u!4 &622595995
 Transform:
   m_ObjectHideFlags: 0
@@ -2000,6 +2001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2a2bc85138bab4bbecd1d02c32a9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highscoreKey: LocalHighscores
+  scoreboardSize: 10
 --- !u!114 &1487392449
 MonoBehaviour:
   m_ObjectHideFlags: 0
