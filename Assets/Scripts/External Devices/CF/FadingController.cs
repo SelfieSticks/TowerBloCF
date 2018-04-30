@@ -28,14 +28,9 @@ public class FadingController : MonoBehaviour
     [SerializeField] private float clearingRate = 0.1f;
     [SerializeField] private AudioSource fogClearingSound;
 
-    private Image fadingImage;
+    [SerializeField] private Image fadingImage;
 
     private bool isFading = true;
-
-    void Start()
-    {
-        fadingImage = this.GetComponent<Image>();
-    }
 
     private void ChangeTransparency(float delta)
     {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HuffController : MonoBehaviour
 {
-    [SerializeField] private AchievementManager am;
+    [SerializeField] private AchievementManager achievementManager; // TODO integrate huffing banners properly
     [SerializeField] private Image huffBanner;
     [SerializeField] private Orbit orbitCam;
     [SerializeField] private Sprite huffSprite;
@@ -20,12 +20,11 @@ public class HuffController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        am = FindObjectOfType<AchievementManager>();
+        achievementManager = FindObjectOfType<AchievementManager>();
 
         breathsPerSet = PlayerPrefs.GetInt("cf_breaths");
         sets = PlayerPrefs.GetInt("cf_sets");
-
-        huffBanner = GetComponent<Image>();
+        
         Fizzyo.FizzyoFramework.Instance.Recogniser.BreathStarted += BreathStarted;
     }
 
@@ -42,7 +41,7 @@ public class HuffController : MonoBehaviour
     private void Update()
     {
         var count = Fizzyo.FizzyoFramework.Instance.Recogniser.BreathCount;
-        if (count == lastHuff + 1 + breathsPerSet /* < TODO */)
+        if (count == lastHuff + 1 + breathsPerSet)
         {
             lastHuff = count;
             orbitCam.cameraDistance -= 3;
