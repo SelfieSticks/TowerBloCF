@@ -13,7 +13,8 @@ public class LocalHighscore : HighscoreBehaviour {
 
     public override bool SaveHighscore(string name, int score) {
         var hsList = GetHighscores();
-        hsList.Insert(hsList.FindIndex(kv => kv.Value < score), new KeyValuePair<string, int>(name, score));
+        var index = Mathf.Max(0, hsList.FindIndex(kv => kv.Value < score));
+        hsList.Insert(index, new KeyValuePair<string, int>(name, score));
         while(hsList.Count > scoreboardSize) {
             hsList.RemoveAt(scoreboardSize);
         }
