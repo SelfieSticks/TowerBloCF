@@ -244,8 +244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerBlock: 0
   normal: {fileID: 2100000, guid: d4a1ee004af28144a8bdc4f49ce18f0b, type: 2}
-  lit: {fileID: 2100000, guid: 194b864949bd5f446aef9d430cb68c61, type: 2}
-  gold: {fileID: 2100000, guid: 01736e76ecb4686448655f2af12b77c7, type: 2}
+  lit: {fileID: 2100000, guid: 5df5e11c74b181649a52b5615532a058, type: 2}
+  gold: {fileID: 2100000, guid: 194b864949bd5f446aef9d430cb68c61, type: 2}
   randMaterial:
   - {fileID: 2100000, guid: 40d0abd2d98a0a94b8d0743986e3eb15, type: 2}
   - {fileID: 2100000, guid: 8222d84a5a4ae9c4893db644f5a5170a, type: 2}
