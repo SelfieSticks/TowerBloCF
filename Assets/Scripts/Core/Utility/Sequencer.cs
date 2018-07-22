@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Unoper.Unity.Utils
 {
-    public class Sequencer : MonoBehaviour, IConsumable
+    public class Sequencer : MonoBehaviour
     {
         [SerializeField] private bool executeOnStart;
         [SerializeField] private UnityEvent[] UnityEventSequence;
@@ -22,9 +22,5 @@ namespace Unoper.Unity.Utils
                 unityEvent.Invoke();
             }
         }
-
-        public bool IsConsumable() { return true; }
-
-        public void Consume() { ExecuteSequence(); }
     }
 }

@@ -12,7 +12,12 @@ namespace Unoper.Unity.Utils
             float[] rands = new float[ipositions.Length].Select(x => Random.Range(0, 1f)).ToArray();
             float sum = rands.Sum();
 
-            rands.Zip(ipositions, (r, p) => p.GetPosition() * (r / sum)).Sum();
+            var position = Vector3.zero;
+            for (int i = 0; i < ipositions.Length; i++)
+            {
+                position += ipositions[i].GetPosition() * (rands[i] / sum);
+            }
+            return position;
         }
     }
 }
