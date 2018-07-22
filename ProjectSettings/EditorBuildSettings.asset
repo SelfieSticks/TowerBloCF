@@ -6,14 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/main menu.unity
+    path: Assets/Scenes/Menus/main menu.unity
     guid: 0f3afe0c059414e4a97274ce14dda7de
   - enabled: 1
-    path: Assets/Scenes/playGame.unity
+    path: Assets/Scenes/Game/Play.unity
     guid: d04c7891c02ad4dd8bb64fac6ba40ad4
   - enabled: 1
-    path: Assets/Scenes/Settings.unity
+    path: Assets/Scenes/Menus/Settings.unity
     guid: 6097068a0b80748e48f194a8eea87907
   - enabled: 1
-    path: Assets/Scenes/About.unity
+    path: Assets/Scenes/Menus/About.unity
     guid: d8025b6030a1ae449a3fbcee2192045d
+  - enabled: 1
+    path: Assets/Scenes/Game/Cityscapes/London/Cityscape London.unity
+    guid: 6ea7ed855f6c51a46b872ef2a42f8c49
+  m_configObjects: {}
