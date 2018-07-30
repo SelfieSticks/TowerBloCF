@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 82467137542564662}
   - component: {fileID: 114006571601860058}
   m_Layer: 0
-  m_Name: SwingingAttachingCube
+  m_Name: TowerBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13056,7 +13056,7 @@ Prefab:
     - target: {fileID: 114231495180622934, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: playGame
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 114512028902040126, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
