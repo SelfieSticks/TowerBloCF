@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HuffController : MonoBehaviour
@@ -10,28 +11,29 @@ public class HuffController : MonoBehaviour
     [SerializeField] private Sprite huffSprite;
     [SerializeField] private Sprite coughSprite;
     [SerializeField] private float huffTime = 4.0f;
-    [SerializeField] private Level level;
+    [SerializeField] private UnityEvent OnLevelEnd;
 
-    private int lastHuff = 0;
-    private int huffs = 0;
-    private int breathsPerSet;
-    private int sets;
+    private int _lastHuff = 0;
+    private int _huffs = 0;
+    private int _breathsPerSet;
+    private int _sets;
 
     public bool IsHuffing { get; private set; }
-    // Use this for initialization
+    public bool IsHuffLocked;
+
     void Start()
     {
         achievementManager = FindObjectOfType<AchievementManager>();
 
-        breathsPerSet = PlayerPrefs.GetInt("cf_breaths");
-        sets = PlayerPrefs.GetInt("cf_sets");
+        _breathsPerSet = PlayerPrefs.GetInt("cf_breaths");
+        _sets = PlayerPrefs.GetInt("cf_sets");
         
         Fizzyo.FizzyoFramework.Instance.Recogniser.BreathStarted += BreathStarted;
     }
 
     private void BreathStarted(object sender)
     {
-        if (IsHuffing)
+        if (!IsHuffLocked && IsHuffing)
         {
             IsHuffing = false;
             huffBanner.enabled = false;
@@ -42,9 +44,14 @@ public class HuffController : MonoBehaviour
     private void Update()
     {
         var count = Fizzyo.FizzyoFramework.Instance.Recogniser.BreathCount;
-        if (count == lastHuff + 1 + breathsPerSet)
+
+        if (IsHuffLocked)
         {
-            lastHuff = count;
+            _lastHuff = count;
+        } 
+        else if (count == _lastHuff + 1 + _breathsPerSet)
+        {
+            _lastHuff = count;
             orbitCam.cameraDistance -= 3;
 
             StartCoroutine(Huff());
@@ -54,17 +61,19 @@ public class HuffController : MonoBehaviour
     IEnumerator Huff()
     {
         IsHuffing = true;
+        IsHuffLocked = true;
         huffBanner.enabled = true;
         huffBanner.sprite = huffSprite;
 
         yield return new WaitForSeconds(huffTime);
+        IsHuffLocked = false;
 
         huffBanner.sprite = coughSprite;
 
-        huffs++;
-        if(huffs == sets) 
+        _huffs++;
+        if(_huffs == _sets) 
         {
-            level.End();
+            OnLevelEnd.Invoke();
         }
     }
 }
