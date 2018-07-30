@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menus/main menu.unity
+    path: Assets/Scenes/Menus/Main Menu.unity
     guid: 0f3afe0c059414e4a97274ce14dda7de
   - enabled: 1
     path: Assets/Scenes/Game/Play.unity
@@ -20,4 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game/Cityscapes/London/Cityscape London.unity
     guid: 6ea7ed855f6c51a46b872ef2a42f8c49
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/Menus/Splash.unity
+    guid: d832072454793c74eb3fa482171ef17d
