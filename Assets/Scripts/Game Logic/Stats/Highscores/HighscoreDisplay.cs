@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(IHighscoreTable))]
@@ -17,7 +16,7 @@ public class HighscoreDisplay : MonoBehaviour {
         {
             Highscore highscore = null;
             highscores.TryGetValue(i, out highscore);
-            PopulateHighscoreGameObject(HighscoresEntries[i], i + 1, highscore);
+            PopulateHighscoreGameObject(HighscoresEntries[i], i, highscore);
         }
 
         var lastHighscore = highscoreTable.GetLastSavedHighscore();
@@ -38,7 +37,7 @@ public class HighscoreDisplay : MonoBehaviour {
 
         nameText.text = highscore == null? string.Empty : highscore.Name;
         scoreText.text = highscore == null? string.Empty : highscore.Score.ToString();
-        indexText.text = (index == null? "?" : index.ToString()) + ".";
+        indexText.text = (index == null? "?" : (index + 1).ToString()) + ".";
     }
 
     Text GetTextChild(GameObject highscoreEntry, string childName)

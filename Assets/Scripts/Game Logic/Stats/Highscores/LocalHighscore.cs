@@ -5,7 +5,7 @@ using System;
 
 public class LocalHighscore : MonoBehaviour, IHighscoreTable {
     [SerializeField] private string highscoreKey = "LocalHighscores";
-    private Tuple<int, Highscore> lastSavedHighscore;
+    private static Tuple<int, Highscore> lastSavedHighscore;
 
     public IReadOnlyDictionary<int, Highscore> GetHighscores()
     {
@@ -18,9 +18,10 @@ public class LocalHighscore : MonoBehaviour, IHighscoreTable {
         var hsList = GetHighscoreList();
         var index = Mathf.Max(0, hsList.FindIndex(h => h.Score < highscore.Score));
         hsList.Insert(index, highscore);
-        PlayerPrefs.SetString(highscoreKey, JsonUtility.ToJson(hsList));
+        PlayerPrefs.SetString(highscoreKey, JsonUtility.ToJson(new HighscoreWrapper(hsList)));
 
         lastSavedHighscore = Tuple.Create(index, highscore);
+        Debug.Log(lastSavedHighscore);
         return index;
     }
 
@@ -29,9 +30,25 @@ public class LocalHighscore : MonoBehaviour, IHighscoreTable {
         return lastSavedHighscore;
     }
 
+    public void ClearHighscores()
+    {
+        PlayerPrefs.SetString(highscoreKey, JsonUtility.ToJson(Enumerable.Empty<Highscore>()));
+    }
+
     private List<Highscore> GetHighscoreList()
     {
-        return (JsonUtility.FromJson<List<Highscore>>(PlayerPrefs.GetString(highscoreKey))
-            ?? new List<Highscore>());
+        return (JsonUtility.FromJson<HighscoreWrapper>(PlayerPrefs.GetString(highscoreKey)).Highscores
+            ?? new Highscore[0])
+            .ToList();
+    }
+
+    private class HighscoreWrapper
+    {
+        public Highscore[] Highscores;
+
+        public HighscoreWrapper(IEnumerable<Highscore> highscores)
+        {
+            Highscores = highscores.ToArray();
+        }
     }
 }

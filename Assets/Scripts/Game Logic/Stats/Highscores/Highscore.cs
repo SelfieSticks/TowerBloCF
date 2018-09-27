@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
 
-[System.Serializable]
+[Serializable]
 public class Highscore
 {
-    public readonly string Name;
-    public readonly int Score;
+    public string Name;
+    public int Score;
 
     public Highscore(string name, int score)
     {

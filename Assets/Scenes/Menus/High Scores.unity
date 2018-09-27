@@ -13114,7 +13114,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4.
+  m_Text: 3.
 --- !u!222 &362393531
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18475,6 +18475,8 @@ GameObject:
   m_Component:
   - component: {fileID: 511050688}
   - component: {fileID: 511050687}
+  - component: {fileID: 511050689}
+  - component: {fileID: 511050690}
   m_Layer: 0
   m_Name: Highscores Manager
   m_TagString: Untagged
@@ -18507,6 +18509,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &511050689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 511050686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148219a4950b41649aabe2ed024da901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HighscoresEntries:
+  - {fileID: 1142391101}
+  - {fileID: 1638078909}
+  - {fileID: 1925504229}
+  - {fileID: 32421034}
+  - {fileID: 198381462}
+  LastHighscoreEntry: {fileID: 690654283}
+--- !u!114 &511050690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 511050686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8fbda9ae9bd6bd48954fc1036a984a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Score: 10
+  Name: eggy
 --- !u!1 &511927677
 GameObject:
   m_ObjectHideFlags: 0
@@ -18786,7 +18819,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1.
+  m_Text: 4.
 --- !u!222 &518082634
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -66077,9 +66110,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '5
-
-    .'
+  m_Text: 5.
 --- !u!222 &2054027589
 CanvasRenderer:
   m_ObjectHideFlags: 0
