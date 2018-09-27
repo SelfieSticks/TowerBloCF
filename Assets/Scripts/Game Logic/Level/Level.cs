@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Level : MonoBehaviour {
     [SerializeField] private ScoreTracker scoreTracker;
     [SerializeField] private SceneSwitch sceneSwitch;
-    [SerializeField] private HighscoreBehaviour highscores;
+    [SerializeField] private IHighscoreTable highscores;
 	
 	public void End() {
-        highscores.SaveHighscore(PlayerPrefs.GetString("Name"), scoreTracker.Score);
+        highscores.SaveHighscore(new Highscore(
+            PlayerPrefs.GetString("Name"),
+            scoreTracker.Score));
+
         sceneSwitch.NextScene("Highscores");
 	}
 }
