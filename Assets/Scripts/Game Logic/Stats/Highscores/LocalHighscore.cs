@@ -37,8 +37,9 @@ public class LocalHighscore : MonoBehaviour, IHighscoreTable {
 
     private List<Highscore> GetHighscoreList()
     {
-        return (JsonUtility.FromJson<HighscoreWrapper>(PlayerPrefs.GetString(highscoreKey)).Highscores
-            ?? new Highscore[0])
+        return (JsonUtility.FromJson<HighscoreWrapper>(PlayerPrefs.GetString(highscoreKey)) 
+            ?? new HighscoreWrapper(new Highscore[0]))
+            .Highscores
             .ToList();
     }
 
