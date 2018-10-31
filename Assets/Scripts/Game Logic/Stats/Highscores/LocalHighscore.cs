@@ -3,21 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class LocalHighscore : MonoBehaviour, IHighscoreTable {
+public class LocalHighscore : AbstractHighscoreTable {
     [SerializeField] private string highscoreKey = "LocalHighscores";
     private static Tuple<int, Highscore> lastSavedHighscore;
 
-    public IReadOnlyDictionary<int, Highscore> GetHighscores()
+    public override IReadOnlyDictionary<int, Highscore> GetHighscores()
     {
         return GetHighscoreList()
             .Select((h, i) => new { h, i })
             .ToDictionary(p => p.i, p => p.h);
     }
 
-    public int SaveHighscore(Highscore highscore) {
+    public override int SaveHighscore(Highscore highscore) {
         var hsList = GetHighscoreList();
-        var index = Mathf.Max(0, hsList.FindIndex(h => h.Score < highscore.Score));
-        hsList.Insert(index, highscore);
+        var index = hsList.FindIndex(h => h.Score < highscore.Score);
+
+        if (index == -1)
+        {
+            hsList.Add(highscore);
+        } 
+        else
+        {
+            hsList.Insert(index, highscore);
+        }
+
         PlayerPrefs.SetString(highscoreKey, JsonUtility.ToJson(new HighscoreWrapper(hsList)));
 
         lastSavedHighscore = Tuple.Create(index, highscore);
@@ -25,14 +34,14 @@ public class LocalHighscore : MonoBehaviour, IHighscoreTable {
         return index;
     }
 
-    public Tuple<int, Highscore> GetLastSavedHighscore()
+    public override Tuple<int, Highscore> GetLastSavedHighscore()
     {
         return lastSavedHighscore;
     }
 
     public void ClearHighscores()
     {
-        PlayerPrefs.SetString(highscoreKey, JsonUtility.ToJson(Enumerable.Empty<Highscore>()));
+        PlayerPrefs.DeleteKey(highscoreKey);
     }
 
     private List<Highscore> GetHighscoreList()

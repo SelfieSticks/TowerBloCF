@@ -9,9 +9,11 @@ namespace Unoper.Unity.Utils
     {
         private static HashSet<T> _singletons = new HashSet<T>();
 
-        [SerializeField] T Id;
+        [SerializeField] private T Id;
+        [SerializeField] private bool DestroyOnLoad;
+        private bool _isSingleton;
 
-	    private void Start ()
+	    private void Awake ()
         {
             if (_singletons.Contains(Id))
             {
@@ -19,8 +21,21 @@ namespace Unoper.Unity.Utils
             } 
             else
             {
+                if(!DestroyOnLoad) {
+                    DontDestroyOnLoad(gameObject);
+                }
+
+                _isSingleton = true;
                 _singletons.Add(Id);
             }
 	    }
+
+        private void OnDestroy()
+        {
+            if(_isSingleton)
+            {
+                _singletons.Remove(Id);
+            }
+        }
     }
 }

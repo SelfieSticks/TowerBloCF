@@ -4544,7 +4544,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Uno
+  m_Text: the highscores table
 --- !u!222 &108749671
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10029,7 +10029,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1409885936}
     - target: {fileID: 114231495180622934, guid: d69e97d9351a40240afcf577a3c552f4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -11033,7 +11033,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Uno
+  m_Text: is most likely
 --- !u!222 &307410636
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30387,7 +30387,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Uno
+  m_Text: in play mode,
 --- !u!222 &903137305
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33997,7 +33997,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Uno
+  m_Text: If this text is displayed
 --- !u!222 &1023416788
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -65200,7 +65200,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Uno
+  m_Text: misconfigured.
 --- !u!222 &1986436552
 CanvasRenderer:
   m_ObjectHideFlags: 0

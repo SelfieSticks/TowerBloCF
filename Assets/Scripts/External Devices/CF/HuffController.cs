@@ -13,6 +13,8 @@ public class HuffController : MonoBehaviour
     [SerializeField] private float huffTime = 4.0f;
     [SerializeField] private UnityEvent OnLevelEnd;
 
+    private int firstCount;
+
     private int _lastHuff = 0;
     private int _huffs = 0;
     private int _breathsPerSet;
@@ -21,7 +23,7 @@ public class HuffController : MonoBehaviour
     public bool IsHuffing { get; private set; }
     public bool IsHuffLocked;
 
-    void Start()
+    private void Start()
     {
         achievementManager = FindObjectOfType<AchievementManager>();
 
@@ -29,6 +31,13 @@ public class HuffController : MonoBehaviour
         _sets = PlayerPrefs.GetInt("cf_sets");
         
         Fizzyo.FizzyoFramework.Instance.Recogniser.BreathStarted += BreathStarted;
+
+        firstCount = Fizzyo.FizzyoFramework.Instance.Recogniser.BreathCount;
+    }
+
+    private void OnDestroy()
+    {
+        Fizzyo.FizzyoFramework.Instance.Recogniser.BreathStarted -= BreathStarted;
     }
 
     private void BreathStarted(object sender)
@@ -43,7 +52,7 @@ public class HuffController : MonoBehaviour
 
     private void Update()
     {
-        var count = Fizzyo.FizzyoFramework.Instance.Recogniser.BreathCount;
+        var count = Fizzyo.FizzyoFramework.Instance.Recogniser.BreathCount - firstCount;
 
         if (IsHuffLocked)
         {

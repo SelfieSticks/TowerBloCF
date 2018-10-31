@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(IHighscoreTable))]
+[RequireComponent(typeof(AbstractHighscoreTable))]
 public class HighscoreDisplay : MonoBehaviour {
     [SerializeField] private GameObject[] HighscoresEntries;
     [SerializeField] private GameObject LastHighscoreEntry;
 
     private void Start()
     {
-        var highscoreTable = GetComponent<IHighscoreTable>();
+        var highscoreTable = GetComponent<AbstractHighscoreTable>();
 
         var highscores = highscoreTable.GetHighscores();
 

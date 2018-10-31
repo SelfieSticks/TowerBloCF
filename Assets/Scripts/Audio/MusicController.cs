@@ -48,15 +48,17 @@ public class MusicController : MonoBehaviour {
     public void ChangeMusicSet(MusicSet newMusic) {
         if (this != Instance) {
             Instance.ChangeMusicSet(newMusic);
+            Destroy(gameObject);
         } else if (newMusic != MusicSet.NONE && (musicSet == null || newMusic != music)) {
             audsrc.Stop();
 
             music = newMusic;
-            // Keep track index, to vary music more
-            // trackIndex = 0;
 
             // For now, just dynamically load music here
             musicSet = Resources.LoadAll<AudioClip>("Audio/Music/" + newMusic.ToString());
+
+            // Keep track index offset to vary music more
+            trackIndex %= musicSet.Length;
         }
     }
 }
