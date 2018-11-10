@@ -26,3 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/About.unity
     guid: d4853e8fd41f825478cd637a9f3781b0
+  - enabled: 1
+    path: Assets/Scenes/Game/Cityscapes/London/Mars.unity
+    guid: 1a432cb60e81ae4438fe7ee6fb55415f
+  - enabled: 1
+    path: Assets/Scenes/Game/Cityscapes/London/The Moon.unity
+    guid: 8655f944e7a5ece4a821f7c7c1d81b39
