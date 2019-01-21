@@ -393,9 +393,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneNames:
-  - Cityscape London
   - The moon
-  - Mars
+  - The moon
+  - The moon
 --- !u!1 &93317624
 GameObject:
   m_ObjectHideFlags: 0
