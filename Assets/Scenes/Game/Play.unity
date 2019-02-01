@@ -547,13 +547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2c607f2ff22354b9193ee107173be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showLoginAutomatically: 0
-  showSetGamerTagAutomatically: 0
-  showCalibrateAutomatically: 0
-  gameID: 87f2ae03-d34f-4045-a308-feb746e857b2
-  gameSecret: 7BErm0wMvbmXMpq6ANBNLnAaYAlO1nqVqM15wNJAPdRom7lYyKKOEzqeGyOXpZKn
-  useTestHarnessData: 0
-  testHarnessDataFile: 0
+  FizzyoConfigurationProfile: {fileID: 11400000, guid: 804b07ba32e234d47bcbd1b43fec6d89,
+    type: 2}
 --- !u!4 &187666025
 Transform:
   m_ObjectHideFlags: 0

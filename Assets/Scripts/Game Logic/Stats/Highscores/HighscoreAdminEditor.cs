@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(HighscoreAdmin))]
 public class HighscoreAdminEditor : Editor
@@ -23,3 +24,4 @@ public class HighscoreAdminEditor : Editor
         }
     }
 }
+#endif
