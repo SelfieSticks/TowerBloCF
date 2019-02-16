@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showLoginAutomatically: 0
   showSetGamerTagAutomatically: 0
-  showCalibrateAutomatically: 0
+  showCalibrateAutomatically: 1
   gameID: 87f2ae03-d34f-4045-a308-feb746e857b2
   gameSecret: 7BErm0wMvbmXMpq6ANBNLnAaYAlO1nqVqM15wNJAPdRom7lYyKKOEzqeGyOXpZKn
   apiPath: https://api.fizzyo-ucl.co.uk/
