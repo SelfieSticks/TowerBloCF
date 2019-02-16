@@ -404,7 +404,6 @@ PlayerSettings:
   switchAllowsVideoCapturing: 1
   switchAllowsRuntimeAddOnContentInstall: 0
   switchDataLossConfirmation: 0
-  switchUserAccountLockEnabled: 0
   switchSupportedNpadStyles: 3
   switchNativeFsCacheSize: 32
   switchIsHoldTypeHorizontal: 0
@@ -563,11 +562,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: TowerBloCF
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: 
+  metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: SelfieSticks
+  metroCertificateIssuer: SelfieSticks
+  metroCertificateNotAfter: 80c562922dd9d501
   metroApplicationDescription: A tower building game for CF treatment
   wsaImages: {}
   metroTileShortName: 
@@ -664,7 +663,8 @@ PlayerSettings:
     daydream:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    UNet: 1
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 3
   cloudProjectId: d53bb5fb-8162-4f5c-b0bd-77914c29f0be
