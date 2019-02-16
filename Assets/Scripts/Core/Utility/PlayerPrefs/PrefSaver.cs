@@ -8,4 +8,14 @@ public class PrefSaver : MonoBehaviour
     {
         PlayerPrefs.SetString(PrefName, value);
     }
+
+    public void SaveInt(int value)
+    {
+        PlayerPrefs.SetInt(PrefName, value);
+    }
+
+    public void Delete()
+    {
+        PlayerPrefs.DeleteKey(PrefName);
+    }
 }

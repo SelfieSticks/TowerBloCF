@@ -1828,6 +1828,7 @@ MonoBehaviour:
   settingName: cf_breaths
   max: 10
   min: 1
+  defaultValue: 10
 --- !u!1 &52157054
 GameObject:
   m_ObjectHideFlags: 0
@@ -35438,6 +35439,7 @@ MonoBehaviour:
   settingName: cf_sets
   max: 10
   min: 1
+  defaultValue: 10
 --- !u!1 &1172153519
 GameObject:
   m_ObjectHideFlags: 0

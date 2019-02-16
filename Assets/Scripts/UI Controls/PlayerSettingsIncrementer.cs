@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +7,12 @@ public class PlayerSettingsIncrementer : MonoBehaviour {
     [SerializeField] public string settingName;
     [SerializeField] public int max;
     [SerializeField] public int min;
+    [SerializeField] private int defaultValue;
     private Text text;
 
     private void Start() {
         text = GetComponent<Text>();
-        text.text = PlayerPrefs.GetInt(settingName).ToString();
+        text.text = PlayerPrefs.GetInt(settingName, defaultValue).ToString();
     }
 
     public void EditValue(int increment) {
