@@ -2,16 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
 public class PlayerSettingsIncrementer : MonoBehaviour {
     [SerializeField] public string settingName;
     [SerializeField] public int max;
     [SerializeField] public int min;
     [SerializeField] private int defaultValue;
-    private Text text;
+    [SerializeField] private Text text;
 
     private void Start() {
-        text = GetComponent<Text>();
         text.text = PlayerPrefs.GetInt(settingName, defaultValue).ToString();
     }
 
