@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusicController : MonoBehaviour {
-    public enum MusicSet {
+    public enum MusicType {
         NONE,
         Menu,
         Game
     }
 
     private static MusicController Instance;
-    [SerializeField] private MusicSet music = MusicSet.NONE;
+    [SerializeField] private MusicType musicType = MusicType.NONE;
     private AudioClip[] musicSet;
     private int trackIndex = 0;
     private AudioSource audsrc;
+
+    [SerializeField] private bool RandomiseOrder;
     
 	private void Start () {
         if(!Instance) {
             Instance = this;
             DontDestroyOnLoad(this);
             audsrc = GetComponent<AudioSource>();
+        } else {
+            Instance.RandomiseOrder = RandomiseOrder;
         }
-        ChangeMusicSet(music);
+        ChangeMusicSet(musicType);
 	}
 	
 	private void Update () {
@@ -34,6 +35,10 @@ public class MusicController : MonoBehaviour {
         if(!audsrc.isPlaying) {
             int setLength = musicSet.Length;
             if(setLength > 0) {
+                if(RandomiseOrder) {
+                    trackIndex = Random.Range(0, setLength);
+                }
+
                 audsrc.PlayOneShot(musicSet[trackIndex]);
 
                 trackIndex += 1;
@@ -45,20 +50,20 @@ public class MusicController : MonoBehaviour {
 	}
 
     // Can be called to change the music
-    public void ChangeMusicSet(MusicSet newMusic) {
+    public void ChangeMusicSet(MusicType newMusic) {
         if (this != Instance) {
             Instance.ChangeMusicSet(newMusic);
             Destroy(gameObject);
-        } else if (newMusic != MusicSet.NONE && (musicSet == null || newMusic != music)) {
+        } else if (newMusic != MusicType.NONE && (musicSet == null || newMusic != musicType)) {
             audsrc.Stop();
 
-            music = newMusic;
+            musicType = newMusic;
 
             // For now, just dynamically load music here
             musicSet = Resources.LoadAll<AudioClip>("Audio/Music/" + newMusic.ToString());
 
-            // Keep track index offset to vary music more
-            trackIndex %= musicSet.Length;
+            // Reset track index offset to vary music more
+            trackIndex = 0;
         }
     }
 }

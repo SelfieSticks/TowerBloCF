@@ -1114,6 +1114,16 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 93317624}
+    - target: {fileID: 114893161085178086, guid: d0c4cbe26ff18fb4dbee913577469606,
+        type: 3}
+      propertyPath: RandomiseOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114893161085178086, guid: d0c4cbe26ff18fb4dbee913577469606,
+        type: 3}
+      propertyPath: musicType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0c4cbe26ff18fb4dbee913577469606, type: 3}
 --- !u!1 &694412371
