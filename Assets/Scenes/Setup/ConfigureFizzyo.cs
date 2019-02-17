@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Fizzyo;
 
 public class ConfigureFizzyo : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class ConfigureFizzyo : MonoBehaviour
         }
         else
         {
-            Debug.Log(setupDateString);
+            Debug.Log("Settings configured on: " + setupDateString);
             SceneManager.LoadScene(menuSceneName);
         }
     }
