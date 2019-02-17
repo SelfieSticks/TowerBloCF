@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class NameValidator : MonoBehaviour
 {
-    [SerializeField] InputField input;
-    [SerializeField] Button continueButton;
+    [SerializeField] private InputField input;
+    [SerializeField] private Button continueButton;
 
     public void Start()
     {
