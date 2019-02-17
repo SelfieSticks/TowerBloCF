@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Setup/Setup.unity
     guid: cf955cc494591f940a1c66206dfdd1c3
   - enabled: 1
-    path: Assets/Scenes/Menus/main menu.unity
+    path: Assets/Scenes/Menus/Main Menu/main menu.unity
     guid: 0f3afe0c059414e4a97274ce14dda7de
   - enabled: 1
     path: Assets/Scenes/Game/Play.unity
@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game/Cityscapes/London/The Moon.unity
     guid: 8655f944e7a5ece4a821f7c7c1d81b39
+  - enabled: 1
+    path: Assets/Fizzyo/FizzyoFramework/Scenes/Calibration.unity
+    guid: 19019ff99c632e74d84ac7c3ad4a7183
   m_configObjects: {}
