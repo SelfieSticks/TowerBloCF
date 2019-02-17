@@ -120,6 +120,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1477604250}
     m_Modifications:
+    - target: {fileID: 1629242609503852, guid: f93205919633d1e42a91c7a6d879b0ea, type: 3}
+      propertyPath: m_Name
+      value: Breath Widget
+      objectReference: {fileID: 0}
     - target: {fileID: 224327302322045712, guid: f93205919633d1e42a91c7a6d879b0ea,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -159,6 +163,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224327302322045712, guid: f93205919633d1e42a91c7a6d879b0ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224327302322045712, guid: f93205919633d1e42a91c7a6d879b0ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224327302322045712, guid: f93205919633d1e42a91c7a6d879b0ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224327302322045712, guid: f93205919633d1e42a91c7a6d879b0ea,
         type: 3}
@@ -210,8 +229,7 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114452438571126520, guid: f93205919633d1e42a91c7a6d879b0ea, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f93205919633d1e42a91c7a6d879b0ea, type: 3}
 --- !u!224 &13260334 stripped
 RectTransform:
@@ -988,8 +1006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 2
   breathThreshold: 0.6
-  fadingRate: 0.05
-  clearingRate: 0.1
+  fadeInRate: 0.05
+  clearingRate: 0.2
   fogClearingSound: {fileID: 1074316151}
   fadingImage: {fileID: 1074316149}
 --- !u!114 &622595994
@@ -1052,18 +1070,6 @@ Transform:
   m_Father: {fileID: 369220311}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &627918535 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114549103708347828, guid: f93205919633d1e42a91c7a6d879b0ea,
-    type: 3}
-  m_PrefabInstance: {fileID: 13260333}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &661926806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2056,6 +2062,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreTracker: {fileID: 1487392443}
   highscores: {fileID: 1487392448}
+--- !u!114 &1663316053 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 875944838652843882, guid: f93205919633d1e42a91c7a6d879b0ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 13260333}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1755438251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,10 +2117,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72dbe58248e4d9b4c82d4c1ec765270a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breathDurationText: {fileID: 627918535}
-  breathCircle: {fileID: 1312636246}
-  goodBreathDuration: 0
-  goodBreathLevel: 0.5
+  timeFill: {fileID: 1312636246}
+  strengthFill: {fileID: 1663316053}
+  goodDurationPercentage: 0.8
+  goodStrengthPercentage: 0.8
+  goodDurationColour: {r: 0, g: 1, b: 0.007030964, a: 1}
+  goodStrengthColour: {r: 0.5269428, g: 1, b: 0.504717, a: 1}
 --- !u!1 &1896481516
 GameObject:
   m_ObjectHideFlags: 0

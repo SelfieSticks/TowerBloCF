@@ -3,56 +3,56 @@ using UnityEngine.UI;
 using Fizzyo;
 
 public class BreathWidget : MonoBehaviour {
-    [SerializeField] private Text breathDurationText;
-    [SerializeField] private Image breathCircle;
-    [SerializeField] public float goodBreathDuration;
-    [SerializeField] private float goodBreathLevel;
+    [SerializeField] private Image timeFill;
+    [SerializeField] private Image strengthFill;
 
-    private float breathLevel;
-    private float lastFill;
-    private float maxGoodBreathLevel;
+    [SerializeField] public float goodDurationPercentage;
+    [SerializeField] private float goodStrengthPercentage;
+
+    [SerializeField] private Color goodDurationColour;
+    [SerializeField] private Color goodStrengthColour;
+
+    private Color originalDurationColour;
+    private Color originalStrengthColour;
+
+    private FizzyoFramework fizzyoFramework;
 
     private void Start() {
-        SetMaxGoodBreathLevel(FizzyoFramework.Instance.Device.maxPressureCalibrated);
+        originalDurationColour = timeFill.color;
+        originalStrengthColour = timeFill.color;
+        fizzyoFramework = FizzyoFramework.Instance;
     }
 
-    public void SetGoodBreathLevel(float breathLevel) {
-        goodBreathLevel = breathLevel;
+    private void Update()
+    {
+        SetBreathTimeFill();
+        SetBreathStrengthFill();
     }
 
-    public void SetMaxGoodBreathLevel(float breathLevel) {
-        maxGoodBreathLevel = breathLevel;
-    }
-    
-    public void SetBreathLevel(float fill) {
-        breathLevel = fill;
-        if(breathLevel < goodBreathLevel) {
-            breathCircle.fillAmount = Mathf.Lerp(0f, 0.75f, breathLevel / goodBreathLevel);
-        } else if(breathLevel < maxGoodBreathLevel) {
-            breathCircle.fillAmount = Mathf.Lerp(0.75f, 1f, (breathLevel - goodBreathLevel) / (maxGoodBreathLevel - goodBreathLevel));
-        } else {
-            breathCircle.fillAmount = 1.0f;
+    private void SetBreathTimeFill()
+    {
+        var durationFraction = fizzyoFramework.Recogniser.BreathLength / fizzyoFramework.Device.maxBreathCalibrated;
+        timeFill.fillAmount = durationFraction;
+        if(durationFraction > goodDurationPercentage)
+        {
+            timeFill.color = goodDurationColour;
+        }
+        else
+        {
+            timeFill.color = originalDurationColour;
         }
     }
 
-    private void Update() {
-        SetBreathLevel(FizzyoFramework.Instance.Device.Pressure());
-
-        if(goodBreathLevel <= breathLevel && breathLevel <= maxGoodBreathLevel) {
-            goodBreathDuration += Time.deltaTime;
-            breathDurationText.text = goodBreathDuration.ToString("0.0");
-
-            if(goodBreathDuration > 3.0f) {
-                goodBreathDuration = 3.0f;
-                breathDurationText.color = Color.green;
-            } else {
-                breathDurationText.color = Color.black;
-            }
-        } else {
-            goodBreathDuration = 0;
-            breathDurationText.text = "";
+    private void SetBreathStrengthFill()
+    {
+        float strengthFraction = fizzyoFramework.Device.Pressure() / fizzyoFramework.Device.maxPressureCalibrated;
+        strengthFill.fillAmount = strengthFraction;
+        if (strengthFraction > goodStrengthPercentage)
+        {
+            strengthFill.color = goodStrengthColour;
+        } else
+        {
+            strengthFill.color = originalStrengthColour;
         }
-
-        lastFill = breathLevel;
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Fizzyo;
+using System.Collections;
 using UnityEngine;
 
 public class SwingSpawner : MonoBehaviour {
@@ -31,7 +31,7 @@ public class SwingSpawner : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (canDrop && !huff.IsHuffing && (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0))
+        if (canDrop && !huff.IsHuffing && DetectDropInput())
         {
             canDrop = false;
 
@@ -45,6 +45,14 @@ public class SwingSpawner : MonoBehaviour {
 
             StartCoroutine(WaitAndSpawn());
         }
+    }
+
+    private bool DetectDropInput()
+    {
+        return 
+            Input.GetKeyDown(KeyCode.Space) ||
+            FizzyoFramework.Instance.Device.ButtonDown() || 
+            Input.touchCount > 0;
     }
 
     IEnumerator WaitAndSpawn()

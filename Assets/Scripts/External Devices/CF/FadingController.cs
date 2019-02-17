@@ -1,6 +1,5 @@
 ﻿using Fizzyo;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +19,7 @@ public class FadingController : MonoBehaviour
     /// <summary>
     /// The rate at which fog becomes thicker.
     /// </summary>
-    [SerializeField] private float fadingRate = 0.01f;
+    [SerializeField] private float fadeInRate = 0.01f;
 
     /// <summary>
     /// The rate at which fog clears after breathThreshold has been observed.
@@ -51,17 +50,19 @@ public class FadingController : MonoBehaviour
 
     private void Update()
     {
-        if(ShouldClear() && isFading)
-        {
-            if(!fogClearingSound.isPlaying && fadingImage.color.a > 0.6)
-                fogClearingSound.Play();
-            StartCoroutine(ResetFading());
-        }
-
         if (isFading)
         {
-            ChangeTransparency(fadingRate * Time.deltaTime);
-        } else
+            if (ShouldClear())
+            {
+                StartCoroutine(ResetFading());
+
+                if (!fogClearingSound.isPlaying && fadingImage.color.a > 0.6)
+                    fogClearingSound.Play();
+            }
+
+            ChangeTransparency(fadeInRate * Time.deltaTime);
+        }
+        else
         {
             ChangeTransparency(-clearingRate * Time.deltaTime);
         }
