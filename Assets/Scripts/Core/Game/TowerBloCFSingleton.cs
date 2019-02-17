@@ -4,7 +4,7 @@ using Unoper.Unity.Utils;
 public enum TowerBloCFSingletons
 {
     MainCamera,
-    FizzyoFramework
+    FizzyoFrameworkInitialiser
 }
 
 public class TowerBloCFSingleton : Singleton<TowerBloCFSingletons> {}
