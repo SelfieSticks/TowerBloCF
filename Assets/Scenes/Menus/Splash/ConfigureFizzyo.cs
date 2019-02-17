@@ -10,7 +10,7 @@ public class ConfigureFizzyo : MonoBehaviour
     
     private const string DEFAULT_VALUE = "";
 
-    void Start()
+    public void DecideNextScene()
     {
         var setupDateString = PlayerPrefs.GetString(TowerBloCFPrefs.SETUP_FLAG, DEFAULT_VALUE);
 

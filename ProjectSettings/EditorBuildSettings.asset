@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menus/Splash.unity
+    guid: d832072454793c74eb3fa482171ef17d
+  - enabled: 1
     path: Assets/Scenes/Setup/Setup.unity
     guid: cf955cc494591f940a1c66206dfdd1c3
   - enabled: 1
@@ -23,9 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game/Cityscapes/London/Cityscape London.unity
     guid: 6ea7ed855f6c51a46b872ef2a42f8c49
-  - enabled: 1
-    path: Assets/Scenes/Menus/Splash.unity
-    guid: d832072454793c74eb3fa482171ef17d
   - enabled: 1
     path: Assets/Scenes/Menus/About/About.unity
     guid: d4853e8fd41f825478cd637a9f3781b0
