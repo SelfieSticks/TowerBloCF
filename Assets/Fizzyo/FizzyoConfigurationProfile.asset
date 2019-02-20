@@ -15,8 +15,8 @@ MonoBehaviour:
   showLoginAutomatically: 1
   showSetGamerTagAutomatically: 0
   showCalibrateAutomatically: 1
-  gameID: 87f2ae03-d34f-4045-a308-feb746e857b2
-  gameSecret: 7BErm0wMvbmXMpq6ANBNLnAaYAlO1nqVqM15wNJAPdRom7lYyKKOEzqeGyOXpZKn
+  gameID: ba9be491-ab92-400a-b3e2-48c59a12db82
+  gameSecret: NR8M7Vl4zbqMB7R9WyYvYkkbprOZqEgLJOyLkQWjneg2z73j5qQZMl3dwZ1p0GDX
   apiPath: https://api.fizzyo-ucl.co.uk/
   useTestHarnessData: 0
   testHarnessDataFile: 0
