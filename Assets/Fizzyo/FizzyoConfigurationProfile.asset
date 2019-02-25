@@ -4,8 +4,7 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,10 +12,11 @@ MonoBehaviour:
   m_Name: FizzyoConfigurationProfile
   m_EditorClassIdentifier: 
   showLoginAutomatically: 1
+  requireLaunchFromHub: 1
   showSetGamerTagAutomatically: 0
   showCalibrateAutomatically: 1
-  gameID: ba9be491-ab92-400a-b3e2-48c59a12db82
-  gameSecret: NR8M7Vl4zbqMB7R9WyYvYkkbprOZqEgLJOyLkQWjneg2z73j5qQZMl3dwZ1p0GDX
+  gameID: <Enter GameID here/>
+  gameSecret: <Enter Game Secret here/>
   apiPath: https://api.fizzyo-ucl.co.uk/
   useTestHarnessData: 0
   testHarnessDataFile: 0
