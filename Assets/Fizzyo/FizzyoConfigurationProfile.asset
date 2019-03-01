@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f867855b2339e4b4c9cba2dcf9f8a10c, type: 3}
+  m_Name: FizzyoConfigurationProfile
+  m_EditorClassIdentifier: 
+  showLoginAutomatically: 1
+  requireLaunchFromHub: 1
+  showSetGamerTagAutomatically: 0
+  showCalibrateAutomatically: 1
+  gameID: 382ebd56-0c97-4555-b2bb-2f6de60391a9
+  gameSecret: 7BErm0wMvbmGKXgoXNJkkO3eYAlO1nqVomRy83X46dBBqgpK9mgDAQxd79jAkGxv
+  apiPath: https://api-staging.fizzyo-ucl.co.uk/
+  useTestHarnessData: 0
+  testHarnessDataFile: 0
