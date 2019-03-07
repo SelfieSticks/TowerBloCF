@@ -24,21 +24,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/Highscores/High Scores.unity
     guid: d8025b6030a1ae449a3fbcee2192045d
   - enabled: 1
-    path: Assets/Scenes/Game/Cityscapes/London/Cityscape London.unity
+    path: Assets/Scenes/Game/the solar system/levels/Cityscape London.unity
     guid: 6ea7ed855f6c51a46b872ef2a42f8c49
   - enabled: 1
     path: Assets/Scenes/Menus/About/About.unity
     guid: d4853e8fd41f825478cd637a9f3781b0
   - enabled: 1
-    path: Assets/Scenes/Game/Cityscapes/London/Mars.unity
+    path: Assets/Scenes/Game/the solar system/levels/Mars.unity
     guid: 1a432cb60e81ae4438fe7ee6fb55415f
   - enabled: 1
-    path: Assets/Scenes/Game/Cityscapes/London/The Moon.unity
+    path: Assets/Scenes/Game/the solar system/levels/The Moon.unity
     guid: 8655f944e7a5ece4a821f7c7c1d81b39
   - enabled: 1
     path: Assets/Fizzyo/FizzyoFramework/Scenes/Calibration.unity
     guid: 19019ff99c632e74d84ac7c3ad4a7183
   - enabled: 1
-    path: Assets/Scenes/Game/Cityscapes/London/Saturn.unity
+    path: Assets/Scenes/Game/the solar system/levels/Saturn.unity
     guid: 80aebad2d1130ed4797f2fdbee2a9cf4
   m_configObjects: {}
