@@ -1,7 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+namespace SelfieSticks.TowerBloCF
+{
 
 [RequireComponent(typeof(BlockEventBroadcaster))]
 public class AchievementManager : BlockEventReceiver 
@@ -82,4 +84,6 @@ public class AchievementManager : BlockEventReceiver
 
         bannerPriority = 0;
     }
+}
+
 }

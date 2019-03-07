@@ -2061,6 +2061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreTracker: {fileID: 1487392443}
   highscores:
+  - {fileID: 1606517639}
   - {fileID: 2055361678}
 --- !u!1 &1606517637
 GameObject:
